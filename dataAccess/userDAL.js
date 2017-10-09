@@ -1,7 +1,8 @@
 var Users = [
 	{
 		id: 1,
-		name: "Anders"
+		name: "Anders",
+		address: "Kongensgade"  	
 	},
 	{
 		id: 2,
@@ -16,11 +17,5 @@ var getUserById = function(id) {
 		}
 	}
 };
-
-// Users.forEach(function(element) {
-// 	if (id === element.id) {
-// 		return element;
-// 	}
-// }, this);
 
 module.exports = { getUserById };

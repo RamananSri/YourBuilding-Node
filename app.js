@@ -10,10 +10,6 @@ app.use("/users", users);
 
 module.exports = app;
 
-// app.get("/", function(req, res) {
-// 	res.send("Hello World!");
-// });
-
 // app.get("/Ramanan", function(req, res) {
 // 	res.send("Hello Ramanan");
 // });
@@ -40,6 +36,6 @@ module.exports = app;
 // 	res.sendStatus(200);
 // });
 
-app.listen(3000, function() {
+app.listen(3000, "127.0.0.1", function() {
 	console.log("Example app listening on port 3000!");
 });
