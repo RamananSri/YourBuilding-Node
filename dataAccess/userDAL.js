@@ -2,11 +2,14 @@ var Users = [
 	{
 		id: 1,
 		name: "Anders",
-		address: "Kongensgade"  	
+		address: "Kongensgade",
+		phone: "12345678"  	
 	},
 	{
 		id: 2,
-		name: "Bjarne"
+		name: "Bjarne",
+		address: "Vej",
+		phone: "23456789"
 	}
 ];
 
@@ -18,4 +21,16 @@ var getUserById = function(id) {
 	}
 };
 
-module.exports = { getUserById };
+var postUser = function(user){
+	Users[Users.length] = user;
+};
+
+var getAllUsers = function(){
+	return Users;
+};
+
+module.exports = { 
+	getUserById,
+	postUser,
+	getAllUsers
+};
