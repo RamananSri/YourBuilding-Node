@@ -4,17 +4,23 @@ var getUserById = function(id) {
 	return UserDal.getUserById(id);
 };
 
-var postUser = function(user){
+var postUser = function(user) {
+	var id = getAllUsers().length + 1;
+	user["id"] = id;
 	UserDal.postUser(user);
 };
 
-var getAllUsers = function(){
+var getAllUsers = function() {
 	return UserDal.getAllUsers();
 };
 
-module.exports = { 
+var deleteUser = function(id){
+	UserDal.deleteUser(id);
+}; 
+
+module.exports = {
 	getUserById,
 	postUser,
-	getAllUsers
+	getAllUsers,
+	deleteUser
 };
-

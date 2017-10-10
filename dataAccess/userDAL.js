@@ -3,7 +3,7 @@ var Users = [
 		id: 1,
 		name: "Anders",
 		address: "Kongensgade",
-		phone: "12345678"  	
+		phone: "12345678"
 	},
 	{
 		id: 2,
@@ -21,16 +21,27 @@ var getUserById = function(id) {
 	}
 };
 
-var postUser = function(user){
+var postUser = function(user) {
 	Users[Users.length] = user;
 };
 
-var getAllUsers = function(){
+var getAllUsers = function() {
 	return Users;
 };
 
-module.exports = { 
+var deleteUser = function(id) {
+	for (var i = 0; i < Users.length; i++) {
+		if (id == Users[i].id) {
+			Users.splice(i);		// Fjerner hele lortet af en eller anden grund (burde fjerne og re-indexere)
+			// delete Users[i];		// Fjerner element men ingen re-indexering 
+			return;
+		}
+	}
+};
+
+module.exports = {
 	getUserById,
 	postUser,
-	getAllUsers
+	getAllUsers,
+	deleteUser
 };
