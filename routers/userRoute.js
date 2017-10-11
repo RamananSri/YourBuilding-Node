@@ -20,6 +20,7 @@ router.get("/", function(req, res) {
 
 /* POST user */
 router.post("/", function(req, res) {
+	console.log(req.body);
 	userCtrl.postUser(req.body);
 	res.send(userCtrl.getAllUsers()); // Test
 });
@@ -27,6 +28,14 @@ router.post("/", function(req, res) {
 /* DELETE user */
 router.delete("/:id", function(req, res) {
 	userCtrl.deleteUser(req.params.id);
+	res.send(userCtrl.getAllUsers()); // Test
+});
+
+/* PUT user */
+router.put("/", function(req, res) {
+	console.log(userCtrl.getAllUsers());
+	userCtrl.updateUser(req.body);
+	console.log(userCtrl.getAllUsers());
 	res.send(userCtrl.getAllUsers()); // Test
 });
 

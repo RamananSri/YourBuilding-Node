@@ -14,13 +14,18 @@ var getAllUsers = function() {
 	return UserDal.getAllUsers();
 };
 
-var deleteUser = function(id){
+var deleteUser = function(id) {
 	UserDal.deleteUser(id);
-}; 
+};
+
+var updateUser = function(user) {
+	UserDal.updateUser(user);
+};
 
 module.exports = {
 	getUserById,
 	postUser,
 	getAllUsers,
-	deleteUser
+	deleteUser,
+	updateUser
 };
