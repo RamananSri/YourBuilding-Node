@@ -3,6 +3,8 @@ const userCtrl = require("../controllers/userCtrl");
 const router = express.Router();
 const bodyParser = require("body-parser");
 
+// Decouple controlleren ved at sende modellerne fra routes videre til controller (Persistence/02)
+
 router.use(bodyParser.json()); // support json encoded bodies
 // router.use(bodyParser.urlencoded({ extended: true })); 	// support encoded bodies
 
@@ -33,9 +35,7 @@ router.delete("/:id", function(req, res) {
 
 /* PUT user */
 router.put("/", function(req, res) {
-	console.log(userCtrl.getAllUsers());
 	userCtrl.updateUser(req.body);
-	console.log(userCtrl.getAllUsers());
 	res.send(userCtrl.getAllUsers()); // Test
 });
 
