@@ -1,9 +1,13 @@
 const express = require("express"); // Webserver framework
-// const bodyParser = require("body-parser"); // Post request parsing af f.eks. forms fra user
-const index = require("./routers/index");
-const users = require("./routers/userRoute");
+const mongoose = require("mongoose"); // DB framework
+const index = require("./src/routes/index");
+const users = require("./src/routes/userRoute");
 
 const app = express();
+mongoose.connect(
+	"mongodb://Dat4:Dat1234@ds119685.mlab.com:19685/yourbuilding",
+	{ useMongoClient: true }
+);
 
 app.use("/", index);
 app.use("/users", users);
