@@ -22,7 +22,7 @@ var updateUser = function(user) {
 	UserDal.updateUser(user);
 };
 
-module.exports = {
+module.exports = (user) => {
 	getUserById,
 	postUser,
 	getAllUsers,

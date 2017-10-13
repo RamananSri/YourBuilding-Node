@@ -8,8 +8,6 @@ const app = express();
 app.use("/", index);
 app.use("/users", users);
 
-module.exports = app;
-
 // app.get("/Ramanan", function(req, res) {
 // 	res.send("Hello Ramanan");
 // });
