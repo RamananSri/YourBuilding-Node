@@ -3,32 +3,28 @@ const bodyParser = require("body-parser");
 const express = require("express");
 
 var getUserById = function(req, res) {
-	userDB.findOne({ id: req.id }, function(err, res) {
-		if (err) {
-			console.log(err);
-		}
-		if (res) {
-			console.log("awfe");
-		} else {
-			console.log("Hej");
-			//res.json(result);
-		}
-	});
+	userDB
+		.findOne({
+			id: req.params.id
+		})
+		.exec(function(error, result) {
+			if (error) {
+				res.send("fejl: " + error);
+			}
+			console.log("User fundet");
+			res.json(result);
+		});
 };
 
-var postUser = function(user) {};
+var postUser = function(req, res) {
 
-var getAllUsers = function() {
-	return UserDal.getAllUsers();
 };
 
-var deleteUser = function(id) {
-	UserDal.deleteUser(id);
-};
+var getAllUsers = function() {};
 
-var updateUser = function(user) {
-	UserDal.updateUser(user);
-};
+var deleteUser = function(id) {};
+
+var updateUser = function(user) {};
 
 module.exports = {
 	getUserById,

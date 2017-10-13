@@ -1,13 +1,16 @@
 const express = require("express"); // Webserver framework
 const mongoose = require("mongoose"); // DB framework
+const bodyParser = require("body-parser");
 const index = require("./src/routes/index");
 const users = require("./src/routes/userRoute");
 
 const app = express();
-mongoose.connect(
-	"mongodb://Dat4:Dat1234@ds119685.mlab.com:19685/yourbuilding",
-	{ useMongoClient: true }
-);
+
+mongoose.connect("mongodb://dat:dat@ds119685.mlab.com:19685/yourbuilding", {
+	useMongoClient: true
+});
+
+
 
 app.use("/", index);
 app.use("/users", users);

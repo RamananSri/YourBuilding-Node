@@ -9,4 +9,4 @@ var userModel = new userSchema({
 	email: String
 });
 
-module.exports = mongoose.model("Users", userModel);
+module.exports = mongoose.model("users", userModel);
