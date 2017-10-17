@@ -11,7 +11,7 @@ router.use(bodyParser.json()); // support json encoded bodies
 router.get("/:id/", userCtrl.getUserById);
 
 /* GET all users */
-router.get("/", function(req, res) {});
+router.get("/", userCtrl.getAllUsers);
 
 /* POST user */
 router.post("/", userCtrl.postUser);
