@@ -19,6 +19,9 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.1",
-    "mongoose": "^4.12.1"
+    "mongoose": "^4.12.1",
+    "swagger-tools": "^0.10.3",
+    "swagger-ui": "^3.3.2",
+    "yamljs": "^0.3.0"
   }
 }

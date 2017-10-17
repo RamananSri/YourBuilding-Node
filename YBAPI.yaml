@@ -1,0 +1,47 @@
+swagger : "2.0"
+info:
+  title: Your Building API.
+  description: This is an API for Your Building.
+  version: "0.0.1"
+
+host: "localhost:3000"
+schemes: 
+  - "http"
+consumes: 
+  - "application/json"
+produces: 
+  - "application/json"
+paths: 
+  /users: 
+    get: 
+      description: "Returns all users from the system"
+      produces: 
+        - "application/json"
+      responses: 
+        "200":
+          description: "A list of users."
+          schema: 
+            type: "array"
+            items: 
+              $ref: "#/definitions/User"
+definitions: 
+  User: 
+    type: "object"
+    required: 
+      - "id"
+      - "name"
+      - "address"
+      - "phone"
+      - "email"
+    properties: 
+      id: 
+        type: "string"
+      name: 
+        type: "string"
+      address:
+        type: "string"
+      phone:
+        type: "string"
+      email:
+        type: "string"
+
