@@ -1,28 +1,32 @@
-const UserDal = require("../dataAccess/userDAL");
+const userDB = require("../models/user");
+const bodyParser = require("body-parser");
+const express = require("express");
 
-var getUserById = function(id) {
-	return UserDal.getUserById(id);
+var getUserById = function(req, res) {
+	userDB
+		.findOne({
+			id: req.params.id
+		})
+		.exec(function(error, result) {
+			if (error) {
+				res.send("fejl: " + error);
+			}
+			console.log("User fundet");
+			res.json(result);
+		});
 };
 
-var postUser = function(user) {
-	var id = getAllUsers().length + 1;
-	user["id"] = id;
-	UserDal.postUser(user);
+var postUser = function(req, res) {
+
 };
 
-var getAllUsers = function() {
-	return UserDal.getAllUsers();
-};
+var getAllUsers = function() {};
 
-var deleteUser = function(id) {
-	UserDal.deleteUser(id);
-};
+var deleteUser = function(id) {};
 
-var updateUser = function(user) {
-	UserDal.updateUser(user);
-};
+var updateUser = function(user) {};
 
-module.exports = (user) => {
+module.exports = {
 	getUserById,
 	postUser,
 	getAllUsers,
