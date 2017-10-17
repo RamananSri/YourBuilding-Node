@@ -1,6 +1,4 @@
 const userDB = require("../models/user");
-const bodyParser = require("body-parser");
-const express = require("express");
 
 var getUserById = function(req, res) {
 	userDB
@@ -16,11 +14,16 @@ var getUserById = function(req, res) {
 		});
 };
 
-var postUser = function(req, res) {
+var postUser = function(req, res) {};
 
+var getAllUsers = function(req, res) {
+	userDB.find({}, function(error, result) {
+		if (error) {
+			res.send("fejl: " + error);
+		}
+		res.json(result);
+	});
 };
-
-var getAllUsers = function() {};
 
 var deleteUser = function(id) {};
 

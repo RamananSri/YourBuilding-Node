@@ -1,8 +1,6 @@
 const router = require("express").Router();
 const userCtrl = require("../controllers/userCtrl");
-const userDB = require("../models/user");
 const bodyParser = require("body-parser");
-const jsonParser = bodyParser.json();
 
 // Decouple controlleren ved at sende modellerne fra routes videre til controller (Persistence/02)
 
