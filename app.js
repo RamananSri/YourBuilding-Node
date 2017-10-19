@@ -8,23 +8,27 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
 	app.use(middleware.swaggerUi());
 });
 
-const index = require("./src/routes/index");
+const homeRoute = require("./src/routes/homeRoute");
 const users = require("./src/routes/userRoute");
-const auth = require("./src/routes/authRoute");
+const api = require("./src/routes/apiRoute");
 
 const app = express();
 
 mongoose.connect("mongodb://dat:dat@ds119685.mlab.com:19685/yourbuilding", {
 	useMongoClient: true
 });
+//yb.dk/
+app.use("/", homeRoute);
+//yb.dk/api
+app.use("/api", api);
 
-app.use("/", auth);
-app.use("/index", index);
-app.use("/users", users);
-app.set("secretkey", "Brian");
+//app.use("/api/users", users);
+//yb.dk/api/users
 
 // ip -  "192.168.87.101"
 
 app.listen(3000, function () {
 	console.log("Example app listening on port 3000!");
 });
+
+
