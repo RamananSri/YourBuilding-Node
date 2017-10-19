@@ -1,11 +1,11 @@
 const userDB = require("../models/user");
 
-var getUserById = function(req, res) {
+var getUserById = function (req, res) {
 	userDB
 		.findOne({
 			id: req.params.id
 		})
-		.exec(function(error, result) {
+		.exec(function (error, result) {
 			if (error) {
 				res.send("fejl: " + error);
 			}
@@ -14,10 +14,21 @@ var getUserById = function(req, res) {
 		});
 };
 
-var postUser = function(req, res) {};
+var postUser = (req, res) => {
+	userDB.create(req.body),
+		error => {
+			if (error) {
+				return res.json({
+					succes: false,
+					message: "user ikke oprettet"
+				});
+			}
+			res.json({ succes: true, message: "User oprettet" });
+		};
+};
 
-var getAllUsers = function(req, res) {
-	userDB.find({}, function(error, result) {
+var getAllUsers = function (req, res) {
+	userDB.find({}, function (error, result) {
 		if (error) {
 			res.send("fejl: " + error);
 		}
@@ -25,9 +36,9 @@ var getAllUsers = function(req, res) {
 	});
 };
 
-var deleteUser = function(id) {};
+var deleteUser = function (id) { };
 
-var updateUser = function(user) {};
+var updateUser = function (user) { };
 
 module.exports = {
 	getUserById,
