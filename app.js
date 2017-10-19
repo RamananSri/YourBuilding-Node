@@ -8,20 +8,21 @@ swaggerTools.initializeMiddleware(swaggerDoc, function(middleware) {
 	app.use(middleware.swaggerUi());
 });
 
-const index = require("./src/routes/index");
+const homeRoute = require("./src/routes/homeRoute");
 const users = require("./src/routes/userRoute");
-const auth = require("./src/routes/authRoute");
+const api = require("./src/routes/apiRoute");
 
 const app = express();
 
 mongoose.connect("mongodb://dat:dat@ds119685.mlab.com:19685/yourbuilding", {
 	useMongoClient: true
 });
-
-app.use("/", auth);
-app.use("/index", index);
-app.use("/users", users);
-app.set("secretkey", "Brian");
+//yb.dk/
+app.use("/", homeRoute);
+//yb.dk/api
+app.use("/api", api);
+//yb.dk/api/users - LIMIT THIS TO AUTHORIZED USERS VIA TOKENS
+app.use("/api/users", users);
 
 // ip -  "192.168.87.101"
 
