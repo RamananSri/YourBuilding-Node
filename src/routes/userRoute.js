@@ -13,13 +13,10 @@ router.get("/:id/", userCtrl.getUserById);
 /* GET all users */
 router.get("/", userCtrl.getAllUsers);
 
-/* POST user */
-router.post("/", userCtrl.postUser);
-
 /* DELETE user */
-router.delete("/:id", function(req, res) {});
+router.delete("/:id", userCtrl.deleteUser);
 
 /* PUT user */
-router.put("/", function(req, res) {});
+router.put("/", function (req, res) { });
 
 module.exports = router;
