@@ -4,6 +4,6 @@ const router = require("express").Router();
 
 router.use(bodyParser.json());
 
-router.post("/", authCtrl.authenticate);
+router.use(authCtrl.authenticate);
 
 module.exports = router;

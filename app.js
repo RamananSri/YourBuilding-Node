@@ -17,10 +17,11 @@ const app = express();
 mongoose.connect("mongodb://dat:dat@ds119685.mlab.com:19685/yourbuilding", {
 	useMongoClient: true
 });
+
 //yb.dk/
 app.use("/", homeRoute);
 //yb.dk/api
-app.use("/api", api);
+app.use("/api/", api);
 //yb.dk/api/users - LIMIT THIS TO AUTHORIZED USERS VIA TOKENS
 app.use("/api/users", users);
 
