@@ -20,9 +20,9 @@ mongoose.connect("mongodb://dat:dat@ds119685.mlab.com:19685/yourbuilding", {
 //yb.dk/
 app.use("/", homeRoute);
 //yb.dk/api
-app.use("/api", api);
+app.use("/api/", api);
 
-//app.use("/api/users", users);
+app.use("/api/users", users);
 //yb.dk/api/users
 
 // ip -  "192.168.87.101"
