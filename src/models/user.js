@@ -1,10 +1,9 @@
 const mongoose = require("mongoose");
 const userSchema = mongoose.Schema;
-const validator = require('validator');
+const validator = require("validator");
 const bcrypt = require("bcryptjs");
 
 var userModel = new userSchema({
-	id: String,
 	name: String,
 	address: String,
 	phone: String,
@@ -20,25 +19,24 @@ var userModel = new userSchema({
 	// 		message: '{value} is not a valid email'
 	// 	}
 
-
 	// },
 	email: String,
 	password: String
 });
 
-// userModel.pre("save", function (next) {
-// 	var user = this;
+userModel.pre("save", function(next) {
+	var user = this;
 
-// 	if (user.isModified("password")) {
-// 		bcrypt.genSalt(10, (error, salt) => {
-// 			bcrypt.hash(user.password, salt, (error, hash) => {
-// 				user.password = hash;
-// 				next();
-// 			})
-// 		});
-// 	} else {
-// 		next();
-// 	}
-// });
+	if (user.isModified("password")) {
+		bcrypt.genSalt(10, (error, salt) => {
+			bcrypt.hash(user.password, salt, (error, hash) => {
+				user.password = hash;
+				next();
+			});
+		});
+	} else {
+		next();
+	}
+});
 
 module.exports = mongoose.model("users", userModel);

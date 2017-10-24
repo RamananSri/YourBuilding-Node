@@ -8,7 +8,7 @@ router.use(bodyParser.json()); // support json encoded bodies
 router.get("/", userCtrl.getAllUsers);
 
 /* PUT user */
-router.put("/", userCtrl.updateUser);
+router.put("/:id/", userCtrl.updateUser);
 
 /* GET User by ID */
 router.get("/:id/", userCtrl.getUserById);

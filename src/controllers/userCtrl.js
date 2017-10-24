@@ -1,9 +1,9 @@
 const userDB = require("../models/user");
-const { SHA256 } = require('crypto-js');
-const bcrypt = require('bcryptjs');
+const { SHA256 } = require("crypto-js");
+const bcrypt = require("bcryptjs");
 
 var getUserById = (req, res) => {
-	userDB.findOne({ id: req.params.id }, (error, result) => {
+	userDB.findOne({ _id: req.params.id }, (error, result) => {
 		if (error) {
 			return res.json({ succes: false, message: "mongo error" });
 		}
@@ -21,7 +21,7 @@ var postUser = (req, res) => {
 };
 
 var getAllUsers = (req, res) => {
-	userDB.find({}, function (error, result) {
+	userDB.find({}, function(error, result) {
 		if (error) {
 			return res.json({ succes: false, message: "mongo error" });
 		}
@@ -30,7 +30,7 @@ var getAllUsers = (req, res) => {
 };
 
 var deleteUser = (req, res) => {
-	userDB.findOneAndRemove({ id: req.params.id }, error => {
+	userDB.findOneAndRemove({ _id: req.params.id }, error => {
 		if (error) {
 			return res.json({ succes: false, message: "mongo error" });
 		}
@@ -38,7 +38,14 @@ var deleteUser = (req, res) => {
 	});
 };
 
-var updateUser = (req, res) => { };
+var updateUser = (req, res) => {
+	userDB.findByIdAndUpdate({ _id: req.params.id}, req.body, error => {
+		if(error){
+			return res.json({ succes: false, message: "mongo error" });
+		}
+		res.json({ succes: true, message: "User updated" });
+	});
+};
 
 module.exports = {
 	getUserById,
