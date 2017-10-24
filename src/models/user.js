@@ -8,37 +8,35 @@ var userModel = new userSchema({
 	name: String,
 	address: String,
 	phone: String,
-	// email: {
-	// 	type: String,
-	// 	required: true,
-	// 	trim: true,
-	// 	unique: true,
-	// 	validate: {
-	// 		validator: (value) => {
-	// 			return validator.isEmail(value);
-	// 		},
-	// 		message: '{value} is not a valid email'
-	// 	}
+	email: {
+		type: String,
+		required: true,
+		trim: true,
+		unique: true,
+		validate: {
+			validator: (value) => {
+				return validator.isEmail(value);
+			},
+			message: '{VALUE} is not a valid email'
+		}
+	},
 
-
-	// },
-	email: String,
 	password: String
 });
 
-// userModel.pre("save", function (next) {
-// 	var user = this;
+userModel.pre("save", function (next) {
+	var user = this;
 
-// 	if (user.isModified("password")) {
-// 		bcrypt.genSalt(10, (error, salt) => {
-// 			bcrypt.hash(user.password, salt, (error, hash) => {
-// 				user.password = hash;
-// 				next();
-// 			})
-// 		});
-// 	} else {
-// 		next();
-// 	}
-// });
+	if (user.isModified("password")) {
+		bcrypt.genSalt(10, (error, salt) => {
+			bcrypt.hash(user.password, salt, (error, hash) => {
+				user.password = hash;
+				next();
+			})
+		});
+	} else {
+		next();
+	}
+});
 
 module.exports = mongoose.model("users", userModel);
