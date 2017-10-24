@@ -7,20 +7,19 @@ var userModel = new userSchema({
 	name: String,
 	address: String,
 	phone: String,
-	// email: {
-	// 	type: String,
-	// 	required: true,
-	// 	trim: true,
-	// 	unique: true,
-	// 	validate: {
-	// 		validator: (value) => {
-	// 			return validator.isEmail(value);
-	// 		},
-	// 		message: '{value} is not a valid email'
-	// 	}
+	email: {
+		type: String,
+		required: true,
+		trim: true,
+		unique: true,
+		validate: {
+			validator: value => {
+				return validator.isEmail(value);
+			},
+			message: "{VALUE} is not a valid email"
+		}
+	},
 
-	// },
-	email: String,
 	password: String
 });
 

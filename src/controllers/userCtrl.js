@@ -5,7 +5,10 @@ const bcrypt = require("bcryptjs");
 var getUserById = (req, res) => {
 	userDB.findOne({ _id: req.params.id }, (error, result) => {
 		if (error) {
-			return res.json({ succes: false, message: "mongo error" });
+			return res.json({
+				succes: false,
+				message: "mongo error i getUserById"
+			});
 		}
 		res.json(result);
 	});
@@ -14,7 +17,11 @@ var getUserById = (req, res) => {
 var postUser = (req, res) => {
 	userDB.create(req.body, error => {
 		if (error) {
-			return res.json({ succes: false, message: "mongo error" });
+			//Ændre message til besked fra userSchema
+			return res.json({
+				succes: false,
+				message: "mongo error i postUser"
+			});
 		}
 		res.json({ succes: true, message: "User created" });
 	});
@@ -23,7 +30,10 @@ var postUser = (req, res) => {
 var getAllUsers = (req, res) => {
 	userDB.find({}, function(error, result) {
 		if (error) {
-			return res.json({ succes: false, message: "mongo error" });
+			return res.json({
+				succes: false,
+				message: "mongo error i getAllUsers"
+			});
 		}
 		res.json(result);
 	});
@@ -32,15 +42,18 @@ var getAllUsers = (req, res) => {
 var deleteUser = (req, res) => {
 	userDB.findOneAndRemove({ _id: req.params.id }, error => {
 		if (error) {
-			return res.json({ succes: false, message: "mongo error" });
+			return res.json({
+				succes: false,
+				message: "mongo error i deleteUser"
+			});
 		}
 		res.json({ succes: true, message: "User deleted" });
 	});
 };
 
 var updateUser = (req, res) => {
-	userDB.findByIdAndUpdate({ _id: req.params.id}, req.body, error => {
-		if(error){
+	userDB.findByIdAndUpdate({ _id: req.params.id }, req.body, error => {
+		if (error) {
 			return res.json({ succes: false, message: "mongo error" });
 		}
 		res.json({ succes: true, message: "User updated" });
