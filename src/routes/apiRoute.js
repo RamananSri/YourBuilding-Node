@@ -4,6 +4,7 @@ const router = require("express").Router();
 
 router.use(bodyParser.json());
 
-router.post("/", authCtrl.authenticate);
+// Authentication middleware
+router.use(authCtrl.authenticate);
 
 module.exports = router;
