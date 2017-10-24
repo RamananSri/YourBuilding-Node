@@ -15,6 +15,7 @@ var getUserById = (req, res) => {
 };
 
 var postUser = (req, res) => {
+	console.log(req.body);
 	userDB.create(req.body, error => {
 		if (error) {
 			//Ændre message til besked fra userSchema
