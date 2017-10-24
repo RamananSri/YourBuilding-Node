@@ -1,5 +1,5 @@
 const userDB = require("../models/user");
-const {SHA256} = require('crypto-js');
+const { SHA256 } = require('crypto-js');
 const bcrypt = require('bcryptjs');
 
 var getUserById = (req, res) => {
@@ -16,18 +16,12 @@ var postUser = (req, res) => {
 		if (error) {
 			return res.json({ succes: false, message: "mongo error" });
 		}
-		var password = req.body.password;
-		bcrypt.genSalt(10, (err, salt)=> {
-			bcrypt.hash(password, salt, (err,hash)=>{
-				console.log(hash);
-			});
-		});
 		res.json({ succes: true, message: "User created" });
 	});
 };
 
 var getAllUsers = (req, res) => {
-	userDB.find({}, function(error, result) {
+	userDB.find({}, function (error, result) {
 		if (error) {
 			return res.json({ succes: false, message: "mongo error" });
 		}
@@ -44,7 +38,7 @@ var deleteUser = (req, res) => {
 	});
 };
 
-var updateUser = (req, res) => {};
+var updateUser = (req, res) => { };
 
 module.exports = {
 	getUserById,
