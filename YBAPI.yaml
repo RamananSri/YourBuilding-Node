@@ -11,7 +11,8 @@ consumes:
   - "application/json"
 produces: 
   - "application/json"
-paths: 
+paths:
+
   /users: 
     get: 
       description: "Returns all users from the system"
@@ -24,6 +25,20 @@ paths:
             type: "array"
             items: 
               $ref: "#/definitions/User"
+
+  /users: 
+    get: 
+      description: "Returns all users from the system"
+      produces: 
+        - "application/json"
+      responses: 
+        "200":
+          description: "A list of users."
+          schema: 
+            type: "array"
+            items: 
+              $ref: "#/definitions/User"            
+              
 definitions: 
   User: 
     type: "object"
