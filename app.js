@@ -29,7 +29,7 @@ const api = require("./src/routes/apiRoute");
 app.use("/", homeRoute);
 
 //yb.dk/api - middleware authentication
-app.use("/api/", api);
+// app.use("/api/", api);
 
 //yb.dk/api/users - limited access
 app.use("/api/users", users);

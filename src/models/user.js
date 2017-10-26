@@ -4,9 +4,22 @@ const validator = require("validator");
 const bcrypt = require("bcryptjs");
 
 var userModel = new userSchema({
-	name: String,
-	address: String,
-	phone: String,
+	name: {
+		type: String,
+		required: true
+	},
+	address: {
+		type: String,
+		required: true
+	},
+	phone: {
+		type: String,
+		required: true
+	},
+	CVR: {
+		type: Number,
+		required: false
+	},
 	email: {
 		type: String,
 		required: true,
@@ -19,8 +32,10 @@ var userModel = new userSchema({
 			message: "{VALUE} is not a valid email"
 		}
 	},
-
-	password: String
+	password: {
+		type: String,
+		required: true
+	}
 });
 
 userModel.pre("save", function(next) {
