@@ -32,6 +32,8 @@ var login = (req, res) => {
 };
 
 var authenticate = (req, res, next) => {
+	console.log(req.headers.token);
+	console.log(req.body);
 	var token = req.headers.token;
 	if (token) {
 		jwt.verify(token, secret, (error, decoded) => {
