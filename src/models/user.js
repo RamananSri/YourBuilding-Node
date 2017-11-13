@@ -16,7 +16,7 @@ var userModel = new userSchema({
 		type: String,
 		required: true
 	},
-	CVR: {
+	cvr: {
 		type: Number,
 		required: false
 	},

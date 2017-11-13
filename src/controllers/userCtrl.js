@@ -60,7 +60,6 @@ var deleteUser = (req, res) => {
 
 var updateUser = (req, res) => {
 	if (req.body.password !== null) {
-		// var result = mongooseGetUser(req, res);
 
 		userDB.findOne({ _id: req.body._id }, (error, result) => {
 			if (error) {
@@ -69,47 +68,36 @@ var updateUser = (req, res) => {
 					message: "mongo error i getUserById"
 				});
 			}
+			console.log("Getting user");
 
-			res.json(result);
+			// Ingen ændringer på password
+			if (!req.body.newPassword && result.password == req.body.password) {
+				(req, res) => {
+					userDB.findByIdAndUpdate({ _id: req.params._id }, req.body, error => {
+						if (error) {
+							return res.json({ succes: false, message: "mongo error" });
+						}
+						return res.json({ succes: true, message: "User updated" });
+					});
+				};
+			}
+
+			// Ændre password
+			if (req.body.newPassword && result.password === req.body.password) {
+				req.body.password == req.body.newPassword;
+				(req, res) => {
+					userDB.findByIdAndUpdate({ _id: req.params._id }, req.body, error => {
+						if (error) {
+							return res.json({ succes: false, message: "mongo error" });
+						}
+						return res.json({ succes: true, message: "User updated" });
+					});
+				};
+			}
 		});
-
-		// console.log(req.body.password);
-		// console.log(result2.password.toString);
-
-		// if (
-		// 	req.body.newPassword == null &&
-		// 	result2.password == req.body.password
-		// ) {
-		// 	mongooseUpdateUser(req, res);
-		// }
-
-		// if (result2.password === req.body.password) {
-		// 	req.body.password == req.body.newPassword;
-		// 	mongooseUpdateUser(req, res);
-		// }
 	}
-};
 
-var mongooseUpdateUser = (req, res) => {
-	userDB.findByIdAndUpdate({ _id: req.params.id }, req.body, error => {
-		if (error) {
-			return res.json({ succes: false, message: "mongo error" });
-		}
-		res.json({ succes: true, message: "User updated" });
-	});
-};
-
-var mongooseGetUser = (req, res) => {
-	userDB.findOne({ _id: req.body.id }, (error, result) => {
-		if (error) {
-			return res.json({
-				succes: false,
-				message: "mongo error i getUserById"
-			});
-		}
-
-		return result;
-	});
+	res.json({ succes: false, message: "Password mismatch" });
 };
 
 module.exports = {
