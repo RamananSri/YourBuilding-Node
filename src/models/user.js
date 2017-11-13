@@ -16,7 +16,7 @@ var userModel = new userSchema({
 		type: String,
 		required: true
 	},
-	CVR: {
+	cvr: {
 		type: Number,
 		required: false
 	},
@@ -38,19 +38,19 @@ var userModel = new userSchema({
 	}
 });
 
-userModel.pre("save", function(next) {
-	var user = this;
+// userModel.pre("save", next => {
+// 	var user = this;
 
-	if (user.isModified("password")) {
-		bcrypt.genSalt(10, (error, salt) => {
-			bcrypt.hash(user.password, salt, (error, hash) => {
-				user.password = hash;
-				next();
-			});
-		});
-	} else {
-		next();
-	}
-});
+// if (user.isModified("password")) {
+// 	bcrypt.genSalt(10, (error, salt) => {
+// 		bcrypt.hash(user.password, salt, (error, hash) => {
+// 			user.password = hash;
+// 			next();
+// 		});
+// 	});
+// } else {
+// 	next();
+// }
+// });
 
 module.exports = mongoose.model("users", userModel);

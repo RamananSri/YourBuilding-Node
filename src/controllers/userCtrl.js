@@ -1,5 +1,5 @@
 const userDB = require("../models/user");
-const httpClient = require("request");
+// const httpClient = require("request");
 
 // http://cvrapi.dk/api?name=logimatic&country=dk
 
@@ -59,11 +59,44 @@ var deleteUser = (req, res) => {
 };
 
 var updateUser = (req, res) => {
+	if (req.body.password !== null) {
+		var result = mongooseGetUser(req, res);
+		console.log(result.password);
+		console.log(req.body.password);
+
+		if (
+			req.body.newPassword == null &&
+			result.password == req.body.password
+		) {
+			mongooseUpdateUser(req, res);
+		}
+
+		if (result.password === req.body.password) {
+			req.body.password == req.body.newPassword;
+			mongooseUpdateUser(req, res);
+		}
+	}
+};
+
+var mongooseUpdateUser = (req, res) => {
 	userDB.findByIdAndUpdate({ _id: req.params.id }, req.body, error => {
 		if (error) {
 			return res.json({ succes: false, message: "mongo error" });
 		}
 		res.json({ succes: true, message: "User updated" });
+	});
+};
+
+var mongooseGetUser = (req, res) => {
+	userDB.findOne({ _id: req.body.id }, (error, result) => {
+		if (error) {
+			return res.json({
+				succes: false,
+				message: "mongo error i getUserById"
+			});
+		}
+
+		return result;
 	});
 };
 
