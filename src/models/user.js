@@ -18,7 +18,7 @@ var userModel = new userSchema({
 	},
 	cvr: {
 		type: Number,
-		required: false
+		required: true
 	},
 	email: {
 		type: String,
