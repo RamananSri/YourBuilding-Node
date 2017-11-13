@@ -60,21 +60,33 @@ var deleteUser = (req, res) => {
 
 var updateUser = (req, res) => {
 	if (req.body.password !== null) {
-		var result = mongooseGetUser(req, res);
-		console.log(result.password);
-		console.log(req.body.password);
+		// var result = mongooseGetUser(req, res);
 
-		if (
-			req.body.newPassword == null &&
-			result.password == req.body.password
-		) {
-			mongooseUpdateUser(req, res);
-		}
+		userDB.findOne({ _id: req.body._id }, (error, result) => {
+			if (error) {
+				return res.json({
+					succes: false,
+					message: "mongo error i getUserById"
+				});
+			}
 
-		if (result.password === req.body.password) {
-			req.body.password == req.body.newPassword;
-			mongooseUpdateUser(req, res);
-		}
+			res.json(result);
+		});
+
+		// console.log(req.body.password);
+		// console.log(result2.password.toString);
+
+		// if (
+		// 	req.body.newPassword == null &&
+		// 	result2.password == req.body.password
+		// ) {
+		// 	mongooseUpdateUser(req, res);
+		// }
+
+		// if (result2.password === req.body.password) {
+		// 	req.body.password == req.body.newPassword;
+		// 	mongooseUpdateUser(req, res);
+		// }
 	}
 };
 
