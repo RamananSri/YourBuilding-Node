@@ -1,4 +1,5 @@
 const userDB = require("../models/user");
+const bcrypt = require("bcryptjs");
 // const httpClient = require("request");
 
 // http://cvrapi.dk/api?name=logimatic&country=dk
@@ -60,8 +61,8 @@ var deleteUser = (req, res) => {
 
 var updateUser = (req, res) => {
 	if (req.body.password !== null) {
-
-		userDB.findOne({ _id: req.body._id }, (error, result) => {
+		// get user
+		userDB.findOne({ _id: req.params.id }, (error, result) => {
 			if (error) {
 				return res.json({
 					succes: false,
@@ -69,35 +70,61 @@ var updateUser = (req, res) => {
 				});
 			}
 			console.log("Getting user");
+			console.log(result.password);
 
 			// Ingen ændringer på password
 			if (!req.body.newPassword && result.password == req.body.password) {
-				(req, res) => {
-					userDB.findByIdAndUpdate({ _id: req.params._id }, req.body, error => {
+				console.log("hej");
+				console.log(result.password);
+
+				userDB.findByIdAndUpdate(
+					{ _id: req.params.id },
+					req.body,
+					error => {
 						if (error) {
-							return res.json({ succes: false, message: "mongo error" });
+							return res.json({
+								succes: false,
+								message: "mongo error"
+							});
 						}
-						return res.json({ succes: true, message: "User updated" });
-					});
-				};
+						return res.json({
+							succes: true,
+							message: "User updated no new pass"
+						});
+					}
+				);
 			}
 
 			// Ændre password
 			if (req.body.newPassword && result.password === req.body.password) {
-				req.body.password == req.body.newPassword;
-				(req, res) => {
-					userDB.findByIdAndUpdate({ _id: req.params._id }, req.body, error => {
-						if (error) {
-							return res.json({ succes: false, message: "mongo error" });
-						}
-						return res.json({ succes: true, message: "User updated" });
+				bcrypt.genSalt(10, (error, salt) => {
+					bcrypt.hash(req.body.newPassword, salt, (error, hash) => {
+						req.body.password = hash;
+						return;
 					});
-				};
+				});
+
+				console.log("hej");
+
+				userDB.findByIdAndUpdate(
+					{ _id: req.params.id },
+					req.body,
+					error => {
+						if (error) {
+							return res.json({
+								succes: false,
+								message: "mongo error new pass"
+							});
+						}
+						return res.json({
+							succes: true,
+							message: "User updated new pass"
+						});
+					}
+				);
 			}
 		});
 	}
-
-	res.json({ succes: false, message: "Password mismatch" });
 };
 
 module.exports = {
