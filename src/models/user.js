@@ -16,9 +16,9 @@ var userModel = new userSchema({
 		type: String,
 		required: true
 	},
-	cvr: {
+	CVR: {
 		type: Number,
-		required: true
+		required: false
 	},
 	email: {
 		type: String,
@@ -38,7 +38,7 @@ var userModel = new userSchema({
 	}
 });
 
-userModel.pre("save", next => {
+userModel.pre("save", function(next) {
 	var user = this;
 
 	if (user.isModified("password")) {
