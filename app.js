@@ -33,3 +33,8 @@ app.use("/api/", api);
 
 //yb.dk/api/users - limited access
 app.use("/api/users", users);
+
+
+
+// Kun til unit testing
+module.exports = app;
