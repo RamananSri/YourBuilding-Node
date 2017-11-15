@@ -38,7 +38,7 @@ var userModel = new userSchema({
 	}
 });
 
-userModel.pre("save", function(next) {
+userModel.pre("save", function (next) {
 	var user = this;
 
 	if (user.isModified("password")) {

@@ -8,7 +8,7 @@ var getUserById = (req, res) => {
 	userDB.findOne({ _id: req.params.id }, (error, result) => {
 		if (error) {
 			return res.json({
-				succes: false,
+				success: false,
 				message: "mongo error i getUserById"
 			});
 		}
@@ -25,20 +25,18 @@ var postUser = (req, res) => {
 
 	userDB.create(req.body, error => {
 		if (error) {
-			return error;
 
-			//Ændre message til besked fra userSchema
-			// return res.json({
-			// 	succes: false,
-			// 	message: "mongo error i postUser"
-			// });
+			return res.json({
+				succes: false,
+				message: error.message
+			});
 		}
-		res.json({ succes: true, message: "User created" });
+		res.json({ success: true, message: "User created" });
 	});
 };
 
 var getAllUsers = (req, res) => {
-	userDB.find({}, function(error, result) {
+	userDB.find({}, function (error, result) {
 		if (error) {
 			return res.json({
 				succes: false,
@@ -124,7 +122,7 @@ var updateUser = (req, res) => {
 						});
 					}
 				);
-				
+
 			} else {
 				return res.json({
 					succes: false,
