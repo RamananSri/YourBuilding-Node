@@ -4,7 +4,7 @@ const authCtrl = require("../src/controllers/authCtrl");
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const app = require("../app");
-const user = require("../src/models/user");
+var user = require("../src/models/user");
 
 const should = chai.should();
 // const assert = chai.assert();
@@ -12,22 +12,32 @@ const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-// tester om vi får success ved login
-describe("Login", () => {
-	it("receive token", done => {
-		chai
-			.request(app)
-			.post("/login")
-			.send({ email: "test@test.com", password: "test" })
-			.end((err, res) => {
-				expect(res.body.success).to.equal(true);
-				done();
-			});
-	});
-});
+
+// // tester om vi får success ved login
+// describe("Login", () => {
+// 	it("receive token", done => {
+// 		chai
+// 			.request(app)
+// 			.post("/login")
+// 			.send({ email: "test@test.com", password: "test" })
+// 			.end((err, res) => {
+// 				expect(res.body.success).to.equal(true);
+// 				done();
+// 			});
+// 	});
+// });
+
+//Test er muligvis bugged, da den ikke sletter bruger?
 describe("Should delete user", () => {
 	it("Should delete a user with given id", done => {
-		user = new user({ name: "test", address: "test", phone: "" });
+		var test = new user({ name: "test", address: "test", phone: "test", email: "test@test.dk", password: "Test" })
+		//var user1 = { name: "test", address: "test", phone: "test", email: "test@test.dk", password: "Test" }
+		test.save((err, res) => {
+			chai.request(app).delete("/api/users/" + user._id).end((err, res) => {
+				res.should.have.status(200);
+				done();
+			});
+		});
 	});
 });
 
