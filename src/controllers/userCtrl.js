@@ -27,7 +27,7 @@ var postUser = (req, res) => {
 		if (error) {
 
 			return res.json({
-				succes: false,
+				success: false,
 				message: error.message
 			});
 		}
@@ -39,7 +39,7 @@ var getAllUsers = (req, res) => {
 	userDB.find({}, function (error, result) {
 		if (error) {
 			return res.json({
-				succes: false,
+				success: false,
 				message: "mongo error i getAllUsers"
 			});
 		}
@@ -51,31 +51,34 @@ var deleteUser = (req, res) => {
 	userDB.findOneAndRemove({ _id: req.params.id }, error => {
 		if (error) {
 			return res.json({
-				succes: false,
+				success: false,
 				message: "mongo error i deleteUser"
 			});
 		}
-		res.json({ succes: true, message: "User deleted" });
+		res.json({ success: true, message: "User deleted" });
 	});
 };
 
 var updateUser = (req, res) => {
+	console.log(req.body.newPassword);
+
+
 	if (req.body.password !== null) {
 		// get user
 		userDB.findOne({ _id: req.params.id }, (error, result) => {
 			if (error) {
 				return res.json({
-					succes: false,
+					success: false,
 					message: "mongo error i getUserById"
 				});
 			}
-			console.log("Getting user");
-			console.log(result.password);
+			// console.log("Getting user");
+			// console.log(result.password);
 
 			// Ingen ændringer på password
 			if (!req.body.newPassword && result.password == req.body.password) {
-				console.log("hej");
-				console.log(result.password);
+				// console.log("hej");
+				// console.log(result.password);
 
 				userDB.findByIdAndUpdate(
 					{ _id: req.params.id },
@@ -83,12 +86,12 @@ var updateUser = (req, res) => {
 					error => {
 						if (error) {
 							return res.json({
-								succes: false,
+								success: false,
 								message: "mongo error"
 							});
 						}
 						return res.json({
-							succes: true,
+							success: true,
 							message: "User updated no new pass"
 						});
 					}
@@ -104,7 +107,7 @@ var updateUser = (req, res) => {
 					});
 				});
 
-				console.log("hej");
+				// console.log("hej");
 
 				userDB.findByIdAndUpdate(
 					{ _id: req.params.id },
@@ -112,20 +115,19 @@ var updateUser = (req, res) => {
 					error => {
 						if (error) {
 							return res.json({
-								succes: false,
+								success: false,
 								message: "mongo error new pass"
 							});
 						}
 						return res.json({
-							succes: true,
+							success: true,
 							message: "User updated new pass"
 						});
 					}
 				);
-
 			} else {
 				return res.json({
-					succes: false,
+					success: false,
 					message: "Password mismatcg"
 				});
 			}
