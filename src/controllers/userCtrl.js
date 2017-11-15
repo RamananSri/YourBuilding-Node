@@ -25,11 +25,13 @@ var postUser = (req, res) => {
 
 	userDB.create(req.body, error => {
 		if (error) {
+			return error;
+
 			//Ændre message til besked fra userSchema
-			return res.json({
-				succes: false,
-				message: "mongo error i postUser"
-			});
+			// return res.json({
+			// 	succes: false,
+			// 	message: "mongo error i postUser"
+			// });
 		}
 		res.json({ succes: true, message: "User created" });
 	});
@@ -122,6 +124,12 @@ var updateUser = (req, res) => {
 						});
 					}
 				);
+				
+			} else {
+				return res.json({
+					succes: false,
+					message: "Password mismatcg"
+				});
 			}
 		});
 	}
