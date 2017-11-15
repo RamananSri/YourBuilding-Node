@@ -9,7 +9,7 @@ var getUserById = (req, res) => {
 		if (error) {
 			return res.json({
 				success: false,
-				message: "mongo error i getUserById"
+				message: errorm.messageS
 			});
 		}
 		res.json(result);
@@ -40,7 +40,7 @@ var getAllUsers = (req, res) => {
 		if (error) {
 			return res.json({
 				success: false,
-				message: "mongo error i getAllUsers"
+				message: error.message
 			});
 		}
 		res.json(result);
@@ -52,7 +52,7 @@ var deleteUser = (req, res) => {
 		if (error) {
 			return res.json({
 				success: false,
-				message: "mongo error i deleteUser"
+				message: error.message
 			});
 		}
 		res.json({ success: true, message: "User deleted" });
@@ -69,7 +69,7 @@ var updateUser = (req, res) => {
 			if (error) {
 				return res.json({
 					success: false,
-					message: "mongo error i getUserById"
+					message: error.message
 				});
 			}
 			// console.log("Getting user");
