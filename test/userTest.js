@@ -12,7 +12,6 @@ const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-
 // tester om vi får success ved login
 describe("Login", () => {
 	it("receive token", done => {
@@ -28,10 +27,9 @@ describe("Login", () => {
 });
 describe("Should delete user", () => {
 	it("Should delete a user with given id", done => {
-		user = new user({ name: "test", address: "test", phone: "" })
+		user = new user({ name: "test", address: "test", phone: "" });
 	});
 });
-
 
 // Tester om det er muligt at oprette en bruger, hvis statuscode er 200.
 // describe("Create user", () => {
@@ -49,3 +47,48 @@ describe("Should delete user", () => {
 // 		});
 // 	});
 // });
+
+describe("Update user info", () => {
+	var user1 = {
+		name: "User1",
+		address: "User1",
+		phone: "User1",
+		email: "User1@User1.User1",
+		password: "User1",
+		cvr: null
+	};
+
+	it("Create User", done => {
+		chai
+			.request(app)
+			.post("/create")
+			.send(user1)
+			.end((err, res) => {
+				expect(res.body.name).to.equal(user1.name);
+				done();
+			});
+	});
+
+	// it("Get user", done => {
+
+	// })
+
+	// it("Update name", done => {
+	// 	chai
+	// 		.request(app)
+	// 		.get
+	// })
+});
+
+describe("Update user password", () => {});
+
+it("receive token", done => {
+	chai
+		.request(app)
+		.post("/login")
+		.send({ email: "test@test.com", password: "test" })
+		.end((err, res) => {
+			expect(res.body.success).to.equal(true);
+			done();
+		});
+});
