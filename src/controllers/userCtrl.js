@@ -62,6 +62,9 @@ var deleteUser = (req, res) => {
 };
 
 var updateUser = (req, res) => {
+	console.log(req.body.newPassword);
+	
+
 	if (req.body.password !== null) {
 		// get user
 		userDB.findOne({ _id: req.params.id }, (error, result) => {
@@ -71,13 +74,13 @@ var updateUser = (req, res) => {
 					message: "mongo error i getUserById"
 				});
 			}
-			console.log("Getting user");
-			console.log(result.password);
+			// console.log("Getting user");
+			// console.log(result.password);
 
 			// Ingen ændringer på password
 			if (!req.body.newPassword && result.password == req.body.password) {
-				console.log("hej");
-				console.log(result.password);
+				// console.log("hej");
+				// console.log(result.password);
 
 				userDB.findByIdAndUpdate(
 					{ _id: req.params.id },
@@ -106,7 +109,7 @@ var updateUser = (req, res) => {
 					});
 				});
 
-				console.log("hej");
+				// console.log("hej");
 
 				userDB.findByIdAndUpdate(
 					{ _id: req.params.id },
@@ -124,7 +127,6 @@ var updateUser = (req, res) => {
 						});
 					}
 				);
-				
 			} else {
 				return res.json({
 					succes: false,
