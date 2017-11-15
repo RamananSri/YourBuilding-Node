@@ -2,8 +2,6 @@ const userDB = require("../models/user");
 const bcrypt = require("bcryptjs");
 // const httpClient = require("request");
 
-// http://cvrapi.dk/api?name=logimatic&country=dk
-
 var getUserById = (req, res) => {
 	userDB.findOne({ _id: req.params.id }, (error, result) => {
 		if (error) {
@@ -17,7 +15,7 @@ var getUserById = (req, res) => {
 };
 
 var postUser = (req, res) => {
-	// CVR API request code
+	// CVR API request code - // http://cvrapi.dk/api?name=logimatic&country=dk
 
 	// httpClient("http://cvrapi.dk/api?name=logimatic&country=dk", (error, res, body) => {
 	//   console.log(body);
@@ -25,7 +23,6 @@ var postUser = (req, res) => {
 
 	userDB.create(req.body, error => {
 		if (error) {
-
 			return res.json({
 				success: false,
 				message: error.message
@@ -36,7 +33,7 @@ var postUser = (req, res) => {
 };
 
 var getAllUsers = (req, res) => {
-	userDB.find({}, function (error, result) {
+	userDB.find({}, function(error, result) {
 		if (error) {
 			return res.json({
 				success: false,
@@ -60,77 +57,70 @@ var deleteUser = (req, res) => {
 };
 
 var updateUser = (req, res) => {
-	console.log(req.body.newPassword);
-
-
-	if (req.body.password !== null) {
-		// get user
+	// Check if password is defined
+	if (req.body.password) {
+		// Get user
 		userDB.findOne({ _id: req.params.id }, (error, result) => {
 			if (error) {
 				return res.json({
 					success: false,
-					message: "mongo error i getUserById"
+					message: error.message
 				});
 			}
-			// console.log("Getting user");
-			// console.log(result.password);
 
-			// Ingen ændringer på password
-			if (!req.body.newPassword && result.password == req.body.password) {
-				// console.log("hej");
-				// console.log(result.password);
-
-				userDB.findByIdAndUpdate(
-					{ _id: req.params.id },
-					req.body,
-					error => {
-						if (error) {
-							return res.json({
-								success: false,
-								message: "mongo error"
-							});
-						}
+			// Check if Password is correct
+			bcrypt.compare(
+				req.body.password,
+				result.password,
+				(err, result) => {
+					if (err) {
 						return res.json({
-							success: true,
-							message: "User updated no new pass"
+							success: false,
+							message: error.message
 						});
 					}
-				);
-			}
 
-			// Ændre password
-			if (req.body.newPassword && result.password === req.body.password) {
-				bcrypt.genSalt(10, (error, salt) => {
-					bcrypt.hash(req.body.newPassword, salt, (error, hash) => {
-						req.body.password = hash;
-						return;
-					});
-				});
-
-				// console.log("hej");
-
-				userDB.findByIdAndUpdate(
-					{ _id: req.params.id },
-					req.body,
-					error => {
-						if (error) {
-							return res.json({
-								success: false,
-								message: "mongo error new pass"
+					if (result) {
+						// Set + hash new password
+						if (req.body.newPassword) {
+							bcrypt.genSalt(10, (error, salt) => {
+								bcrypt.hash(
+									req.body.newPassword,
+									salt,
+									(error, hash) => {
+										req.body.password = hash;
+									}
+								);
 							});
 						}
-						return res.json({
-							success: true,
-							message: "User updated new pass"
-						});
+
+						// Find and update
+						userDB.findByIdAndUpdate(
+							{ _id: req.params.id },
+							req.body,
+							error => {
+								if (error) {
+									return res.json({
+										success: false,
+										message: error.message
+									});
+								}
+								return res.json({
+									success: true,
+									message: "User updated"
+								});
+							}
+						);
 					}
-				);
-			} else {
-				return res.json({
-					success: false,
-					message: "Password mismatcg"
-				});
-			}
+				}
+			);
+		});
+	} else {
+		// Password not defined
+		return res.json({
+			success: false,
+			message: "Forkert kodeord",
+			statusCode: "1"
 		});
 	}
 };
