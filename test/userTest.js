@@ -1,3 +1,5 @@
+process.env.NODE_ENV = "test";
+
 const authCtrl = require("../src/controllers/authCtrl");
 
 // Unit + Assertion packages
@@ -11,6 +13,45 @@ const should = chai.should();
 const expect = chai.expect;
 
 chai.use(chaiHttp);
+
+// describe("test mock", () => {
+// 	it("should test", done => {
+// 		beforeEach((done) => {
+// 			var testUser = new user({
+// 				name: "testUser",
+// 				address: "testAddress",
+// 				phone: "6666",
+// 				email: "testEmail@testEmail.com",
+// 				password: "testPassword"
+// 			});
+// 			testUser.save((err, res) => {
+// 				done();
+// 			});
+// 		});
+// 	});
+// });
+
+describe("test mock", function (done) {
+	beforeEach(function (done) {
+		var testUser = new user({
+			name: "testUser",
+			address: "testAddress",
+			phone: "6666",
+			email: "testEmail@testEmail.com",
+			password: "testPassword"
+		});
+		testUser.save(function (err) {
+			done();
+		});
+	});
+});
+
+
+
+// afterEach(function (done) {
+// 	Blob.collection.drop();
+// 	done();
+// });
 
 
 // // tester om vi får success ved login
@@ -28,18 +69,18 @@ chai.use(chaiHttp);
 // });
 
 //Test er muligvis bugged, da den ikke sletter bruger?
-describe("Should delete user", () => {
-	it("Should delete a user with given id", done => {
-		var test = new user({ name: "test", address: "test", phone: "test", email: "test@test.dk", password: "Test" })
-		//var user1 = { name: "test", address: "test", phone: "test", email: "test@test.dk", password: "Test" }
-		test.save((err, res) => {
-			chai.request(app).delete("/api/users/" + user._id).end((err, res) => {
-				res.should.have.status(200);
-				done();
-			});
-		});
-	});
-});
+// describe("Should delete user", () => {
+// 	it("Should delete a user with given id", done => {
+// 		var test = new user({ name: "test", address: "test", phone: "test", email: "test@test.dk", password: "Test" })
+// 		//var user1 = { name: "test", address: "test", phone: "test", email: "test@test.dk", password: "Test" }
+// 		test.save((err, res) => {
+// 			chai.request(app).delete("/api/users/" + user._id).end((err, res) => {
+// 				res.should.have.status(200);
+// 				done();
+// 			});
+// 		});
+// 	});
+// });
 
 // Tester om det er muligt at oprette en bruger, hvis statuscode er 200.
 // describe("Create user", () => {
@@ -58,47 +99,48 @@ describe("Should delete user", () => {
 // 	});
 // });
 
-describe("Update user info", () => {
-	var user1 = {
-		name: "User1",
-		address: "User1",
-		phone: "User1",
-		email: "User1@User1.User1",
-		password: "User1",
-		cvr: null
-	};
+// describe("Update user info", () => {
+// 	var user1 = {
+// 		name: "User1",
+// 		address: "User1",
+// 		phone: "User1",
+// 		email: "User1@User1.User1",
+// 		password: "User1",
+// 		cvr: null
+// 	};
 
-	it("Create User", done => {
-		chai
-			.request(app)
-			.post("/create")
-			.send(user1)
-			.end((err, res) => {
-				expect(res.body.name).to.equal(user1.name);
-				done();
-			});
-	});
+// 	it("Create User", done => {
+// 		chai
+// 			.request(app)
+// 			.post("/create")
+// 			.send(user1)
+// 			.end((err, res) => {
+// 				expect(res.body.name).to.equal(user1.name);
+// 				done();
+// 			});
+// 	});
 
-	// it("Get user", done => {
+// 	// it("Get user", done => {
 
-	// })
+// 	// })
 
-	// it("Update name", done => {
-	// 	chai
-	// 		.request(app)
-	// 		.get
-	// })
-});
+// 	// it("Update name", done => {
+// 	// 	chai
+// 	// 		.request(app)
+// 	// 		.get
+// 	// })
+// });
 
-describe("Update user password", () => { });
+// describe("Update user password", () => { });
 
-it("receive token", done => {
-	chai
-		.request(app)
-		.post("/login")
-		.send({ email: "test@test.com", password: "test" })
-		.end((err, res) => {
-			expect(res.body.success).to.equal(true);
-			done();
-		});
-});
+// it("receive token", done => {
+// 	chai
+// 		.request(app)
+// 		.post("/login")
+// 		.send({ email: "test@test.com", password: "test" })
+// 		.end((err, res) => {
+// 			expect(res.body.success).to.equal(true);
+// 			done();
+// 		});
+// });
+
