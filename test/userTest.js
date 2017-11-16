@@ -14,24 +14,8 @@ const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-// describe("test mock", () => {
-// 	it("should test", done => {
-// 		beforeEach((done) => {
-// 			var testUser = new user({
-// 				name: "testUser",
-// 				address: "testAddress",
-// 				phone: "6666",
-// 				email: "testEmail@testEmail.com",
-// 				password: "testPassword"
-// 			});
-// 			testUser.save((err, res) => {
-// 				done();
-// 			});
-// 		});
-// 	});
-// });
 
-describe("test mock", function (done) {
+describe("test mock", function () {
 	beforeEach(function (done) {
 		var testUser = new user({
 			name: "testUser",
@@ -40,18 +24,12 @@ describe("test mock", function (done) {
 			email: "testEmail@testEmail.com",
 			password: "testPassword"
 		});
-		testUser.save(function (err) {
+		testUser.save(function (err, res) {
+			res.should.have.status(200);
 			done();
 		});
 	});
 });
-
-
-
-// afterEach(function (done) {
-// 	Blob.collection.drop();
-// 	done();
-// });
 
 
 // // tester om vi får success ved login
@@ -82,7 +60,7 @@ describe("test mock", function (done) {
 // 	});
 // });
 
-// Tester om det er muligt at oprette en bruger, hvis statuscode er 200.
+//Tester om det er muligt at oprette en bruger, hvis statuscode er 200.
 // describe("Create user", () => {
 // 	it("Should create user", done => {
 // 		var user = {
