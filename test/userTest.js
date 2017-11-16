@@ -90,7 +90,7 @@ describe("Update user info", () => {
 	// })
 });
 
-describe("Update user password", () => {});
+describe("Update user password", () => { });
 
 it("receive token", done => {
 	chai
