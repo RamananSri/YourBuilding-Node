@@ -20,23 +20,23 @@ paths:
         - "application/json"
       responses: 
         "200":
-          description: "A list of users."
+          description: "Returns a list of users."
           schema: 
             type: "array"
             items: 
               $ref: "#/definitions/User"
 
-  /users: 
-    get: 
-      description: "Returns all users from the system"
+  /Create: 
+    post: 
+      description: "post a user to the system"
       produces: 
         - "application/json"
       responses: 
         "200":
-          description: "A list of users."
+          description: "Posts a user."
           schema: 
-            type: "array"
-            items: 
+            # type: "object"
+            # items: 
               $ref: "#/definitions/User"            
               
 definitions: 
@@ -59,4 +59,5 @@ definitions:
         type: "string"
       email:
         type: "string"
+  
 

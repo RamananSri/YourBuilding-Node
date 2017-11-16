@@ -1,21 +1,36 @@
 // Webserver framework
 const express = require("express");
 const app = express();
-app.listen(3000, function() {
+
+var config = require("./_config");
+
+app.listen(3000, function () {
 	console.log("Example app listening on port 3000!");
 }); // ip -  "192.168.87.101"
 
 // MongoDB framework
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://dat:dat@ds119685.mlab.com:19685/yourbuilding", {
+
+
+mongoose.connect(config.mongoURI[app.settings.env], function (err, res) {
 	useMongoClient: true
+	if (err) {
+		console.log('Error connecting to the database. ' + err);
+	} else {
+		console.log('Connected to Database: ' + config.mongoURI[app.settings.env]);
+	}
 });
+
+
+// mongoose.connect("mongodb://dat:dat@ds119685.mlab.com:19685/yourbuilding", {
+// 	useMongoClient: true
+// });
 
 // Swagger documentation
 const swaggerTools = require("swagger-tools");
 const yaml = require("yamljs");
 const swaggerDoc = yaml.load("YBAPI.yaml");
-swaggerTools.initializeMiddleware(swaggerDoc, function(middleware) {
+swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
 	app.use(middleware.swaggerUi());
 });
 
