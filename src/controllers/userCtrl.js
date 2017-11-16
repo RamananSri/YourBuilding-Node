@@ -2,6 +2,8 @@ const userDB = require("../models/user");
 const bcrypt = require("bcryptjs");
 // const httpClient = require("request");
 
+/* Function that gets a user by ID. Checks the given ID with the ones in the database and returns an
+ error message or a user object. */
 var getUserById = (req, res) => {
 	userDB.findOne({ _id: req.params.id }, (error, result) => {
 		if (error) {
@@ -14,6 +16,7 @@ var getUserById = (req, res) => {
 	});
 };
 
+/* Function that creates and adds a new user to the database with the values from the given body. */
 var postUser = (req, res) => {
 	// CVR API request code - // http://cvrapi.dk/api?name=logimatic&country=dk
 
@@ -32,6 +35,7 @@ var postUser = (req, res) => {
 	});
 };
 
+/* Function that gets all existing users from the DB or returns an error message if this fails. */
 var getAllUsers = (req, res) => {
 	userDB.find({}, function(error, result) {
 		if (error) {
@@ -44,6 +48,7 @@ var getAllUsers = (req, res) => {
 	});
 };
 
+/* Function that deletes a user from the DB with a specific ID. */
 var deleteUser = (req, res) => {
 	userDB.findOneAndRemove({ _id: req.params.id }, error => {
 		if (error) {
@@ -125,6 +130,7 @@ var updateUser = (req, res) => {
 	}
 };
 
+/* Making the functions public, so they can be used from other classes. */
 module.exports = {
 	getUserById,
 	postUser,
