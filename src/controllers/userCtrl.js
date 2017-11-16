@@ -2,18 +2,21 @@ const userDB = require("../models/user");
 const bcrypt = require("bcryptjs");
 // const httpClient = require("request");
 
+/* Function that gets a user by ID. Checks the given ID with the ones in the database and returns an
+ error message or a user object. */
 var getUserById = (req, res) => {
 	userDB.findOne({ _id: req.params.id }, (error, result) => {
 		if (error) {
 			return res.json({
 				success: false,
-				message: errorm.messageS
+				message: error.message
 			});
 		}
 		res.json(result);
 	});
 };
 
+/* Function that creates and adds a new user to the database with the values from the given body. */
 var postUser = (req, res) => {
 	// CVR API request code - // http://cvrapi.dk/api?name=logimatic&country=dk
 
@@ -32,6 +35,7 @@ var postUser = (req, res) => {
 	});
 };
 
+/* Function that gets all existing users from the DB or returns an error message if this fails. */
 var getAllUsers = (req, res) => {
 	userDB.find({}, function(error, result) {
 		if (error) {
@@ -44,6 +48,7 @@ var getAllUsers = (req, res) => {
 	});
 };
 
+/* Function that deletes a user from the DB with a specific ID. */
 var deleteUser = (req, res) => {
 	userDB.findOneAndRemove({ _id: req.params.id }, error => {
 		if (error) {
@@ -57,6 +62,76 @@ var deleteUser = (req, res) => {
 };
 
 var updateUser = (req, res) => {
+	// old password defined
+	if (req.body.password) {
+		userDB.findOne({ _id: req.params.id }, (error, result) => {
+			if (error) {
+				return res.json({
+					success: false,
+					message: error.message
+				});
+			}
+			// compare client password with databse password
+			bcrypt.compare(
+				req.body.password,
+				result.password,
+				(err, result) => {
+					if (err) {
+						return res.json({
+							success: false,
+							message: err.message
+						});
+					}
+					// compare match - set + hash new password
+					if (result) {
+						if (req.body.newPassword) {
+							bcrypt.genSalt(10, (error, salt) => {
+								bcrypt.hash(
+									req.body.newPassword,
+									salt,
+									(error, hash) => {
+										req.body.password = hash;
+									}
+								);
+							});
+						}
+						// find and update
+						userDB.findByIdAndUpdate(
+							{ _id: req.params.id },
+							req.body,
+							error => {
+								if (error) {
+									return res.json({
+										success: false,
+										message: error.message
+									});
+								}
+								return res.json({
+									success: true,
+									message: "User updated"
+								});
+							}
+						);
+					}
+					// compare does not match
+					return res.json({
+						success: false,
+						message: "Password mismatch"
+					});
+				}
+			);
+		});
+	} else {
+		// old password not defined
+		return res.json({
+			success: false,
+			message: "Forkert kodeord",
+			statusCode: "1"
+		});
+	}
+};
+
+var updateUser2 = (req, res) => {
 	// Check if password is defined
 	if (req.body.password) {
 		// Get user
@@ -92,26 +167,28 @@ var updateUser = (req, res) => {
 									}
 								);
 							});
-						}
-
-						// Find and update
-						userDB.findByIdAndUpdate(
-							{ _id: req.params.id },
-							req.body,
-							error => {
-								if (error) {
+						} else {
+							// Find and update
+							userDB.findByIdAndUpdate(
+								{ _id: req.params.id },
+								req.body,
+								error => {
+									if (error) {
+										return res.json({
+											success: false,
+											message: error.message
+										});
+									}
 									return res.json({
-										success: false,
-										message: error.message
+										success: true,
+										message: "User updated"
 									});
 								}
-								return res.json({
-									success: true,
-									message: "User updated"
-								});
-							}
-						);
+							);
+						}
 					}
+
+					console.log("HELLO WORLD");
 				}
 			);
 		});
@@ -125,6 +202,7 @@ var updateUser = (req, res) => {
 	}
 };
 
+/* Making the functions public, so they can be used from other classes. */
 module.exports = {
 	getUserById,
 	postUser,
