@@ -38,9 +38,11 @@ var userModel = new userSchema({
 	}
 });
 
-userModel.pre("save", function (next) {
+//Using pre as middleware
+userModel.pre("save", function(next) {
 	var user = this;
 
+	//Checking if password are changed, and afterward salt and hashing it
 	if (user.isModified("password")) {
 		bcrypt.genSalt(10, (error, salt) => {
 			bcrypt.hash(user.password, salt, (error, hash) => {
