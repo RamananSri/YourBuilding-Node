@@ -11,15 +11,12 @@ app.listen(3000, function() {
 // MongoDB framework
 const mongoose = require("mongoose");
 
-
-mongoose.connect(config.mongoURI[app.settings.env], function (err, res) {
-	useMongoClient: true
+mongoose.connect(config.mongoURI[app.settings.env], function(err, res) {
+	useMongoClient: true;
 	if (err) {
 		console.log("Error connecting to the database. " + err);
 	} else {
-		console.log(
-			"Connected to Database: " + config.mongoURI[app.settings.env]
-		);
+		console.log("Connected to Database: " + config.mongoURI[app.settings.env]);
 	}
 });
 
@@ -38,7 +35,7 @@ swaggerTools.initializeMiddleware(swaggerDoc, function(middleware) {
 const homeRoute = require("./src/routes/homeRoute");
 const userRoute = require("./src/routes/userRoute");
 const api = require("./src/routes/apiRoute");
-const questionRoute = require(".src/routes/questionRoute");
+const questionRoute = require("./src/routes/questionRoute");
 
 // Routes
 
