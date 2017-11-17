@@ -10,7 +10,10 @@ app.listen(3000, function() {
 
 // MongoDB framework
 const mongoose = require("mongoose");
-mongoose.connect(config.mongoURI[app.settings.env], function(err, res) {
+
+
+mongoose.connect(config.mongoURI[app.settings.env], function (err, res) {
+	useMongoClient: true
 	if (err) {
 		console.log("Error connecting to the database. " + err);
 	} else {
@@ -18,7 +21,6 @@ mongoose.connect(config.mongoURI[app.settings.env], function(err, res) {
 			"Connected to Database: " + config.mongoURI[app.settings.env]
 		);
 	}
-	useMongoClient: true;
 });
 
 // mongoose.connect("mongodb://dat:dat@ds119685.mlab.com:19685/yourbuilding", {
