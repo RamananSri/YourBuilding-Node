@@ -10,7 +10,7 @@ var postAnswer = (req, res) => {
 			});
 		}
 
-		result.answer.push(req.body.answer);
+		result.answer[result.answer.length + 1] = req.body.answer;
 
 		questionDB.findByIdAndUpdate({ _id: req.params.id }, result, error => {
 			if (error) {
@@ -25,16 +25,6 @@ var postAnswer = (req, res) => {
 				message: "Answer updated"
 			});
 		});
-	});
-
-	answerDB.findByIdAndUpdate({ _id: req.params.id }, req.body, error => {
-		if (error) {
-			return res.json({
-				success: false,
-				message: error.message
-			});
-		}
-		res.json({ success: true, message: "Answer created" });
 	});
 };
 
