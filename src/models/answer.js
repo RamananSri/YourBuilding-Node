@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
-const answerSchema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-var answerModel = new answerSchema({
+var answerModel = new Schema({
 	description: {
 		type: String,
 		required: true
@@ -24,4 +24,4 @@ var answerModel = new answerSchema({
 	}
 });
 
-module.exports = { answerModel };
+module.exports = mongoose.model("answers", answerModel);
