@@ -31,6 +31,10 @@ var questionModel = new questionSchema({
 		data: Buffer,
 		contentType: String,
 		required: false
+	},
+	questionDate: {
+		type: Date,
+		required: true
 	}
 });
 

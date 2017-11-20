@@ -36,6 +36,7 @@ const homeRoute = require("./src/routes/homeRoute");
 const userRoute = require("./src/routes/userRoute");
 const api = require("./src/routes/apiRoute");
 const questionRoute = require("./src/routes/questionRoute");
+const answerRoute = require("./src/routes/answerRoute");
 
 // Routes
 
@@ -49,6 +50,8 @@ app.use("/api/", api);
 app.use("/api/users", userRoute);
 
 app.use("/api/questions", questionRoute);
+
+app.use("/api/answers", answerRoute);
 
 // Kun til unit testing
 module.exports = app;
