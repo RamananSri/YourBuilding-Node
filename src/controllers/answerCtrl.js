@@ -10,7 +10,9 @@ var postAnswer = (req, res) => {
 			});
 		}
 
-		result.answer[result.answer.length + 1] = req.body.answer;
+		result.answers[result.answers.length] = req.body;
+
+		console.log(result.answers);
 
 		questionDB.findByIdAndUpdate({ _id: req.params.id }, result, error => {
 			if (error) {
