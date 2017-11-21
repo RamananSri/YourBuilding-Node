@@ -9,7 +9,6 @@ var postAnswer = (req, res) => {
 				message: error.message
 			});
 		}
-
 		result.answer[result.answer.length + 1] = req.body.answer;
 
 		questionDB.findByIdAndUpdate({ _id: req.params.id }, result, error => {
