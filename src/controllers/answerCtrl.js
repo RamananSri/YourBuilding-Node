@@ -35,6 +35,13 @@ var updateAnswer = (req, res) => {
 				message: error.message
 			});
 		}
+
+		for(var i=0;i<result.answers.length;i++){
+			if(result.answers[i]._id == req.body._id){
+				result.answers[i] = req.body;
+			}
+		}
+
 		// Save to DB
 		result.save(error => {
 			if (error) {
