@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
-const answer = require("./answer");
-const questionSchema = mongoose.Schema;
+const answer = require("./answer").schema;
+const Schema = mongoose.Schema;
 
-var questionModel = new questionSchema({
+var questionModel = new Schema({
 	title: {
 		type: String,
 		required: true
@@ -23,10 +23,9 @@ var questionModel = new questionSchema({
 		type: String,
 		required: true
 	},
-	answers: {
-		type: [answer],
-		required: false
-	},
+
+	answers: [answer],
+
 	picture: {
 		data: Buffer,
 		contentType: String,

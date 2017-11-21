@@ -1,7 +1,7 @@
-const answerDB = require("../models/answer");
 const questionDB = require("../models/question");
 
 var postAnswer = (req, res) => {
+	// Find the question
 	questionDB.findOne({ _id: req.params.id }, (error, result) => {
 		if (error) {
 			return res.json({
@@ -9,19 +9,19 @@ var postAnswer = (req, res) => {
 				message: error.message
 			});
 		}
-		result.answer[result.answer.length + 1] = req.body.answer;
-
-		questionDB.findByIdAndUpdate({ _id: req.params.id }, result, error => {
+		// Add answer to the answers array on question
+		result.answers.push(req.body);
+		// Save to DB
+		result.save(error => {
 			if (error) {
 				return res.json({
 					success: false,
 					message: error.message
 				});
 			}
-
-			res.json({
+			return res.json({
 				success: true,
-				message: "Answer updated"
+				message: "yay"
 			});
 		});
 	});
