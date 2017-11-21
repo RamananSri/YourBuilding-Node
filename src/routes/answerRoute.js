@@ -9,4 +9,6 @@ router.post("/:id", answerCtrl.postAnswer);
 
 router.put("/:id/", answerCtrl.updateAnswer);
 
+router.delete("/:id", answerCtrl.deleteAnswer);
+
 module.exports = router;

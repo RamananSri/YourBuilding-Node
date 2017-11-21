@@ -36,8 +36,8 @@ var updateAnswer = (req, res) => {
 			});
 		}
 
-		for(var i=0;i<result.answers.length;i++){
-			if(result.answers[i]._id == req.body._id){
+		for (var i = 0; i < result.answers.length; i++) {
+			if (result.answers[i]._id == req.body._id) {
 				result.answers[i] = req.body;
 			}
 		}
@@ -59,14 +59,30 @@ var updateAnswer = (req, res) => {
 };
 
 var deleteAnswer = (req, res) => {
-	questionDB.findOneAndRemove({ _id: req.params.id }, error => {
+	questionDB.findOne({ _id: req.params.id }, (error, result) => {
 		if (error) {
 			return res.json({
 				success: false,
 				message: error.message
 			});
 		}
-		res.json({ success: true, message: "Answer deleted" });
+		for (var i = 0; i < result.answers.length; i++) {
+			if (result.answers[i]._id == req.body._id) {
+				result.answers[i] = null;
+			}
+		}
+		result.save(error => {
+			if (error) {
+				return res.json({
+					success: false,
+					message: error.message
+				});
+			}
+			return res.json({
+				success: true,
+				message: "Spørgsmål slettet"
+			});
+		});
 	});
 };
 
