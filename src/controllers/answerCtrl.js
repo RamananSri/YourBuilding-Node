@@ -68,7 +68,7 @@ var deleteAnswer = (req, res) => {
 		}
 		for (var i = 0; i < result.answers.length; i++) {
 			if (result.answers[i]._id == req.body._id) {
-				result.answers[i] = null;
+				result.answers.splice(i, 1);
 			}
 		}
 		result.save(error => {
