@@ -14,9 +14,8 @@ const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-
-describe("test mock", function () {
-	beforeEach(function (done) {
+describe("test mock", function() {
+	beforeEach(function(done) {
 		var testUser = new user({
 			name: "testUser",
 			address: "testAddress",
@@ -24,13 +23,12 @@ describe("test mock", function () {
 			email: "testEmail@testEmail.com",
 			password: "testPassword"
 		});
-		testUser.save(function (err, res) {
+		testUser.save(function(err, res) {
 			res.should.have.status(200);
 			done();
 		});
 	});
 });
-
 
 // // tester om vi får success ved login
 // describe("Login", () => {
@@ -121,4 +119,3 @@ describe("test mock", function () {
 // 			done();
 // 		});
 // });
-

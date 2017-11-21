@@ -21,26 +21,33 @@ var postAnswer = (req, res) => {
 			}
 			return res.json({
 				success: true,
-				message: "yay"
+				message: "Spørgsmål oprettet"
 			});
 		});
 	});
 };
 
 var updateAnswer = (req, res) => {
-	questionDB.findOne({ userId: req.params.id }, (error, result) => {
+	questionDB.findOne({ _id: req.params.id }, (error, result) => {
 		if (error) {
 			return res.json({
 				success: false,
 				message: error.message
 			});
 		}
-		var answer = result.answer;
-		array.forEach(function(answer) {
-			if (answer.userId === req.body.userId) {
+		// Save to DB
+		result.save(error => {
+			if (error) {
+				return res.json({
+					success: false,
+					message: error.message
+				});
 			}
-		}, this);
-		res.json(result);
+			return res.json({
+				success: true,
+				message: "Spørgsmål opdateret"
+			});
+		});
 	});
 };
 
