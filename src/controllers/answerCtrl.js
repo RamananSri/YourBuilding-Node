@@ -21,38 +21,68 @@ var postAnswer = (req, res) => {
 			}
 			return res.json({
 				success: true,
-				message: "yay"
+				message: "Spørgsmål oprettet"
 			});
 		});
 	});
 };
 
 var updateAnswer = (req, res) => {
-	questionDB.findOne({ userId: req.params.id }, (error, result) => {
+	questionDB.findOne({ _id: req.params.id }, (error, result) => {
 		if (error) {
 			return res.json({
 				success: false,
 				message: error.message
 			});
 		}
-		var answer = result.answer;
-		array.forEach(function(answer) {
-			if (answer.userId === req.body.userId) {
+
+		for (var i = 0; i < result.answers.length; i++) {
+			if (result.answers[i]._id == req.body._id) {
+				result.answers[i] = req.body;
 			}
-		}, this);
-		res.json(result);
+		}
+
+		// Save to DB
+		result.save(error => {
+			if (error) {
+				return res.json({
+					success: false,
+					message: error.message
+				});
+			}
+			return res.json({
+				success: true,
+				message: "Spørgsmål opdateret"
+			});
+		});
 	});
 };
 
 var deleteAnswer = (req, res) => {
-	questionDB.findOneAndRemove({ _id: req.params.id }, error => {
+	questionDB.findOne({ _id: req.params.id }, (error, result) => {
 		if (error) {
 			return res.json({
 				success: false,
 				message: error.message
 			});
 		}
-		res.json({ success: true, message: "Answer deleted" });
+		for (var i = 0; i < result.answers.length; i++) {
+			if (result.answers[i]._id == req.body._id) {
+				result.answers.splice(i, 1);
+			}
+		}
+		result.save(error => {
+			if (error) {
+				return res.json({
+					success: false,
+					message: error.message
+				});
+			}
+			return res.json({
+				success: true,
+				message: "Spørgsmål slettet"
+			});
+		});
 	});
 };
 
