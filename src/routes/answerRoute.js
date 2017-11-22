@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 
 router.use(bodyParser.json());
 
-/* POST question */
+/* POST answer */
 router.post("/:id", answerCtrl.postAnswer);
 
 router.put("/:id/", answerCtrl.updateAnswer);
