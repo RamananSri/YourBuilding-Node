@@ -59,7 +59,7 @@ var updateAnswer = (req, res) => {
 };
 
 var deleteAnswer = (req, res) => {
-	questionDB.findOne({ _id: req.params.id }, (error, result) => {
+	questionDB.findOne({ _id: req.params.qid }, (error, result) => {
 		if (error) {
 			return res.json({
 				success: false,
@@ -67,7 +67,7 @@ var deleteAnswer = (req, res) => {
 			});
 		}
 		for (var i = 0; i < result.answers.length; i++) {
-			if (result.answers[i]._id == req.body._id) {
+			if (result.answers[i]._id == req.params.aid) {
 				result.answers.splice(i, 1);
 			}
 		}

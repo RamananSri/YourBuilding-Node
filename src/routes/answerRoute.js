@@ -9,6 +9,6 @@ router.post("/:id", answerCtrl.postAnswer);
 
 router.put("/:id/", answerCtrl.updateAnswer);
 
-router.delete("/:id", answerCtrl.deleteAnswer);
+router.delete("/:qid/:aid", answerCtrl.deleteAnswer);
 
 module.exports = router;

@@ -16,7 +16,7 @@ router.put("/:id/", questionCtrl.updateQuestion);
 router.get("/:id/", questionCtrl.getQuestionByUserId);
 
 /* DELETE question */
-router.delete("/:id", questionCtrl.deleteQuestion);
+router.delete("/:qid", questionCtrl.deleteQuestion);
 
 /* POST question */
 router.post("/", questionCtrl.postQuestion);
