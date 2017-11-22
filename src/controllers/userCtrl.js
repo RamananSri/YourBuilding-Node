@@ -1,5 +1,7 @@
-const userDB = require("../models/user");
 const bcrypt = require("bcryptjs");
+
+const userDB = require("../models/user");
+
 // const httpClient = require("request");
 
 /* Function that gets a user by ID. Checks the given ID with the ones in the database and returns an
