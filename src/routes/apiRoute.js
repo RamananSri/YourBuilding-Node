@@ -1,6 +1,7 @@
-const authCtrl = require("../controllers/authCtrl");
 const bodyParser = require("body-parser");
 const router = require("express").Router();
+
+const authCtrl = require("../controllers/authCtrl");
 
 router.use(bodyParser.json());
 

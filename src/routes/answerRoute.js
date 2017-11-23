@@ -1,6 +1,7 @@
 const router = require("express").Router();
-const answerCtrl = require("../controllers/answerCtrl");
 const bodyParser = require("body-parser");
+
+const answerCtrl = require("../controllers/answerCtrl");
 
 router.use(bodyParser.json());
 
