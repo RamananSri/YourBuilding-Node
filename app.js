@@ -4,7 +4,7 @@ const app = express();
 
 var config = require("./_config");
 
-app.listen(3000, function() {
+app.listen(3000, () => {
 	console.log("Example app listening on port 3000!");
 }); // ip -  "192.168.87.101"
 
