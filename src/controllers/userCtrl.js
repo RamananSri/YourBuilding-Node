@@ -33,13 +33,13 @@ var postUser = (req, res) => {
 				message: error.message
 			});
 		}
-		res.json({ success: true, message: "User created" });
+		res.json({ success: true, message: "Bruger oprettet" });
 	});
 };
 
 /* Function that gets all existing users from the DB or returns an error message if this fails. */
 var getAllUsers = (req, res) => {
-	userDB.find({}, function (error, result) {
+	userDB.find({}, function(error, result) {
 		if (error) {
 			return res.json({
 				success: false,
@@ -59,7 +59,7 @@ var deleteUser = (req, res) => {
 				message: error.message
 			});
 		}
-		res.json({ success: true, message: "User deleted" });
+		res.json({ success: true, message: "Bruger slettet" });
 	});
 };
 
@@ -79,7 +79,7 @@ var updateUser = (req, res) => {
 			if (error || !compareResult) {
 				return res.json({
 					success: false,
-					message: "password mismatch"
+					message: "Forkert kodeord"
 				});
 			}
 
@@ -117,7 +117,7 @@ var updateUser = (req, res) => {
 						}
 						return res.json({
 							success: true,
-							message: "User updated"
+							message: "Bruger opdateret"
 						});
 					});
 				});
@@ -165,7 +165,7 @@ var updateUser2 = (req, res) => {
 										}
 										return res.json({
 											success: true,
-											message: "User updated"
+											message: "Bruger opdateret"
 										});
 									});
 								});
@@ -180,7 +180,7 @@ var updateUser2 = (req, res) => {
 								}
 								return res.json({
 									success: true,
-									message: "User updated"
+									message: "Bruger opdateret"
 								});
 							});
 						}
@@ -188,13 +188,13 @@ var updateUser2 = (req, res) => {
 					// compare does not match
 					return res.json({
 						success: false,
-						message: "Password mismatch"
+						message: "Ny password matcher ikke"
 					});
 				});
 			} else {
 				res.json({
 					success: false,
-					message: "Password mismatch"
+					message: "Forkert kodeord"
 				});
 			}
 		});
