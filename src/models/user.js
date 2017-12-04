@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 const bcrypt = require("bcryptjs");
+const mainCategories = require("../models/question").mainCategories;
 
 const Schema = mongoose.Schema;
 
@@ -20,6 +21,11 @@ var userModel = new Schema({
 	cvr: {
 		type: Number,
 		required: false
+	},
+	categories: {
+		type: [String],
+		required: false,
+		enum: mainCategories
 	},
 	email: {
 		type: String,

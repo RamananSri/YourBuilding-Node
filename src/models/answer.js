@@ -22,6 +22,7 @@ var answerModel = new Schema({
 		type: Date,
 		required: true
 	}
+	
 });
 
 module.exports = mongoose.model("answers", answerModel);
