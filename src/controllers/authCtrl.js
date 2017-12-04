@@ -2,6 +2,8 @@ var jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 const userDB = require("../models/user");
+var logger = require("../../log/log");
+
 var secret = "this is the secret secret secret 12356";
 
 /* Login function that checks if a user with the given email and password exists.
@@ -10,6 +12,7 @@ var secret = "this is the secret secret secret 12356";
 var login = (req, res) => {
 	userDB.findOne({ email: req.body.email }, (error, user) => {
 		if (!user) {
+			logger.logErrors(error.message);
 			res.json({
 				success: false,
 				message: "Brugernavn eller kodeord er forkert"
