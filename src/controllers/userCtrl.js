@@ -33,7 +33,7 @@ var postUser = (req, res) => {
 				message: error.message
 			});
 		}
-		res.json({ success: true, message: "User created" });
+		res.json({ success: true, message: "Bruger oprettet" });
 	});
 };
 
@@ -59,7 +59,7 @@ var deleteUser = (req, res) => {
 				message: error.message
 			});
 		}
-		res.json({ success: true, message: "User deleted" });
+		res.json({ success: true, message: "Bruger slettet" });
 	});
 };
 
@@ -79,7 +79,7 @@ var updateUser = (req, res) => {
 			if (error || !compareResult) {
 				return res.json({
 					success: false,
-					message: "password mismatch"
+					message: "Forkert kodeord"
 				});
 			}
 
@@ -117,7 +117,7 @@ var updateUser = (req, res) => {
 						}
 						return res.json({
 							success: true,
-							message: "User updated"
+							message: "Bruger opdateret"
 						});
 					});
 				});

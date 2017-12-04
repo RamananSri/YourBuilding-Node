@@ -4,7 +4,6 @@ const bcrypt = require("bcryptjs");
 const userDB = require("../models/user");
 var secret = "this is the secret secret secret 12356";
 
-
 /* Login function that checks if a user with the given email and password exists.
  If the user exists and the password is correct, a token is given to authenticate on later requests.
  If the user does not exist or the password is incorrect, an error message will be shown. */
@@ -13,7 +12,7 @@ var login = (req, res) => {
 		if (!user) {
 			res.json({
 				success: false,
-				message: "Password or username not found"
+				message: "Brugernavn eller kodeord er forkert"
 			});
 		} else {
 			var token = jwt.sign(JSON.stringify(user._id), secret);
@@ -22,14 +21,14 @@ var login = (req, res) => {
 				if (result) {
 					res.json({
 						success: true,
-						message: "Tillykke du er inde i vores fede system",
+						message: "Bruger authoriseret",
 						token: token,
 						user: user
 					});
 				} else {
 					res.json({
 						success: false,
-						message: "Du er ikke logget ind!!"
+						message: "Brugernavn eller kodeord er forkert"
 					});
 				}
 			});
@@ -50,7 +49,7 @@ var authenticate = (req, res, next) => {
 			}
 		});
 	} else {
-		return res.json({ succes: false, message: "get a token noob" });
+		return res.json({ succes: false, message: "Login igen" });
 	}
 };
 
