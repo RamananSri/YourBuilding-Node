@@ -1,4 +1,4 @@
-const questionDB = require("../models/question");
+const questionDB = require("../models/question").question;
 
 var postAnswer = (req, res) => {
 	// Find the question
