@@ -21,7 +21,7 @@ var postAnswer = (req, res) => {
 			}
 			return res.json({
 				success: true,
-				message: "Spørgsmål oprettet"
+				message: "Svar oprettet"
 			});
 		});
 	});
