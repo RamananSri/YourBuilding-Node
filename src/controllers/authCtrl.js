@@ -13,10 +13,10 @@ const besked = "Brugernavn eller kodeord er forkert";
 var login = (req, res) => {
 	userDB.findOne({ email: req.body.email }, (error, user) => {
 		if (!user) {
-			//logger.logErrors("log/log.txt", besked);
+			logger.logErrors("log/log.txt", besked);
 			return res.json({
 				success: false,
-				message: "Brugernavn eller kodeord er forkert"
+				message: besked
 			});
 
 		} else {
@@ -33,7 +33,7 @@ var login = (req, res) => {
 				} else {
 					res.json({
 						success: false,
-						message: "Brugernavn eller kodeord er forkert"
+						message: besked
 					});
 				}
 			});
