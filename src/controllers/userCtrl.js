@@ -127,6 +127,7 @@ var updateUser = (req, res) => {
 };
 
 var postSubscription = (req, res) => {
+	// Find user
 	userDB.findOne({ _id: req.params.id }, (error, user) => {
 		if (error) {
 			return res.json({
@@ -134,11 +135,13 @@ var postSubscription = (req, res) => {
 				message: error.message
 			});
 		}
-
-		for (var i = 0; i < req.body.categories.length; i++) {
-			user.categories.push(req.body.categories[i]);
+		// If sub does not exist -> add
+		for (var u = 0; u < req.body.categories.length; u++) {
+			if (!user.categories.includes(req.body.categories[u])) {
+				user.categories.push(req.body.categories[u]);
+			}
 		}
-
+		// Save changes
 		user.save(error => {
 			if (error) {
 				return res.json({
@@ -146,7 +149,36 @@ var postSubscription = (req, res) => {
 					message: error.message
 				});
 			}
+			return res.json({
+				success: true,
+				message: "Kategorier opdateret"
+			});
+		});
+	});
+};
 
+var removeSubscription = (req, res) => {
+	// Find user
+	userDB.findOne({ _id: req.params.id }, (error, user) => {
+		if (error) {
+			return res.json({
+				success: false,
+				message: error.message
+			});
+		}
+		// Check for matches and splice if matched
+		for (var u = 0; u < req.body.categories.length; u++) {
+			var i = user.categories.indexOf(req.body.categories[u]);
+			user.categories.splice(i, 1);
+		}
+		// Save changes to user
+		user.save(error => {
+			if (error) {
+				return res.json({
+					success: false,
+					message: error.message
+				});
+			}
 			return res.json({
 				success: true,
 				message: "Kategorier opdateret"
@@ -162,5 +194,6 @@ module.exports = {
 	getAllUsers,
 	deleteUser,
 	updateUser,
-	postSubscription
+	postSubscription,
+	removeSubscription
 };

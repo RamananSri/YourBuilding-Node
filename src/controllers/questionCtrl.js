@@ -3,13 +3,13 @@ var mainCategories = require("../models/question").mainCategories;
 var subCategories = require("../models/question").subCategories;
 
 // Get array of available subcategories
-var getAllSubCategories = (req, res) => {
-	return res.json("hej");
-};
-
-// Get array of available maincategories
-var getAllMainCategories = () => {
-	return resizeBy.json(mainCategories);
+var getAllCategories = (req, res) => {
+	if (req.params.id == 1) {
+		return res.json(mainCategories);
+	}
+	if (req.params.id == 2) {
+		return res.json(subCategories);
+	}
 };
 
 var getBySubCategory = (req, res) => {
@@ -81,6 +81,5 @@ module.exports = {
 	postQuestion,
 	deleteQuestion,
 	updateQuestion,
-	getAllMainCategories,
-	getAllSubCategories
+	getAllCategories
 };
