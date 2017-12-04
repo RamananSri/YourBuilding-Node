@@ -48,9 +48,7 @@ app.use("/api/", api);
 
 //yb.dk/api/users - limited access
 app.use("/api/users", userRoute);
-
 app.use("/api/questions", questionRoute);
-
 app.use("/api/answers", answerRoute);
 
 // Kun til unit testing

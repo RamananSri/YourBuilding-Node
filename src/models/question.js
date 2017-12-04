@@ -2,6 +2,9 @@ const mongoose = require("mongoose");
 const answer = require("./answer").schema;
 const Schema = mongoose.Schema;
 
+var mainCategories = ["Vand", "Varme", "El"];
+var subCategories = ["Varmt", "Koldt", "Fjernvarme", "Pillefyr", "Stærkstrøm", "Svagstrøm"];
+
 var questionModel = new Schema({
 	title: {
 		type: String,
@@ -13,11 +16,13 @@ var questionModel = new Schema({
 	},
 	category: {
 		type: String,
-		required: true
+		required: true,
+		enum: mainCategories
 	},
 	subCategory: {
 		type: String,
-		required: true
+		required: true,
+		enum: subCategories
 	},
 	userId: {
 		type: String,
@@ -37,4 +42,10 @@ var questionModel = new Schema({
 	}
 });
 
-module.exports = mongoose.model("questions", questionModel);
+var question = mongoose.model("questions", questionModel);
+
+module.exports = {
+	question,
+	mainCategories,
+	subCategories
+};

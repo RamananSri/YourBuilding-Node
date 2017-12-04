@@ -1,4 +1,16 @@
-const questionDB = require("../models/question");
+const questionDB = require("../models/question").question;
+var mainCategories = require("../models/question").mainCategories;
+var subCategories = require("../models/question").subCategories;
+
+// Get array of available subcategories
+var getAllSubCategories = (req, res) => {
+	return res.json("hej");
+};
+
+// Get array of available maincategories
+var getAllMainCategories = () => {
+	return resizeBy.json(mainCategories);
+};
 
 var getBySubCategory = (req, res) => {
 	questionDB.find({ subCategory: req.params.subCategory }, function(error, result) {
@@ -68,5 +80,7 @@ module.exports = {
 	getQuestionByUserId,
 	postQuestion,
 	deleteQuestion,
-	updateQuestion
+	updateQuestion,
+	getAllMainCategories,
+	getAllSubCategories
 };
