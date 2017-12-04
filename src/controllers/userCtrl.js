@@ -135,13 +135,22 @@ var postSubscription = (req, res) => {
 			});
 		}
 
-		for (i = 0; i < req.body.categories.length; i++) {
-			user.categories.push(req.body[req.body.categori]);
+		for (var i = 0; i < req.body.categories.length; i++) {
+			user.categories.push(req.body.categories[i]);
 		}
 
-		res.json({
-			success: true,
-			message: "Kategorier opdateret"
+		user.save(error => {
+			if (error) {
+				return res.json({
+					success: false,
+					message: error.message
+				});
+			}
+
+			return res.json({
+				success: true,
+				message: "Kategorier opdateret"
+			});
 		});
 	});
 };
