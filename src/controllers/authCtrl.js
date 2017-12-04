@@ -12,7 +12,7 @@ var secret = "this is the secret secret secret 12356";
 var login = (req, res) => {
 	userDB.findOne({ email: req.body.email }, (error, user) => {
 		if (!user) {
-			logger.logErrors(error.message);
+			//logger.logErrors(error.message);
 			res.json({
 				success: false,
 				message: "Brugernavn eller kodeord er forkert"
