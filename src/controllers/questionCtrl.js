@@ -1,10 +1,19 @@
-const questionDB = require("../models/question");
+const questionDB = require("../models/question").question;
+var mainCategories = require("../models/question").mainCategories;
+var subCategories = require("../models/question").subCategories;
+
+// Get array of available subcategories
+var getAllSubCategories = (req, res) => {
+	return res.json("hej");
+};
+
+// Get array of available maincategories
+var getAllMainCategories = () => {
+	return resizeBy.json(mainCategories);
+};
 
 var getBySubCategory = (req, res) => {
-	questionDB.find({ subCategory: req.params.subCategory }, function(
-		error,
-		result
-	) {
+	questionDB.find({ subCategory: req.params.subCategory }, function(error, result) {
 		if (error) {
 			return res.json({
 				success: false,
@@ -35,7 +44,7 @@ var deleteQuestion = (req, res) => {
 				message: error.message
 			});
 		}
-		res.json({ success: true, message: "Question deleted" });
+		res.json({ success: true, message: "Spørgsmål slettet" });
 	});
 };
 
@@ -47,7 +56,7 @@ var postQuestion = (req, res) => {
 				message: error.message
 			});
 		}
-		res.json({ success: true, message: "Question created" });
+		res.json({ success: true, message: "Spørgsmål oprettet" });
 	});
 };
 
@@ -61,15 +70,17 @@ var updateQuestion = (req, res) => {
 		}
 		return res.json({
 			success: true,
-			message: "Question updated"
+			message: "Spørgsmål opdateret"
 		});
 	});
 };
 
 module.exports = {
-    getBySubCategory,
-    getQuestionByUserId,
-    postQuestion,
-    deleteQuestion,
-    updateQuestion
+	getBySubCategory,
+	getQuestionByUserId,
+	postQuestion,
+	deleteQuestion,
+	updateQuestion,
+	getAllMainCategories,
+	getAllSubCategories
 };

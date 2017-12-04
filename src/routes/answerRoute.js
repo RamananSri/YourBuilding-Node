@@ -8,7 +8,7 @@ router.use(bodyParser.json());
 /* POST answer */
 router.post("/:id", answerCtrl.postAnswer);
 
-router.put("/:id/", answerCtrl.updateAnswer);
+router.put("/:id", answerCtrl.updateAnswer);
 
 router.delete("/:qid/:aid", answerCtrl.deleteAnswer);
 

@@ -4,14 +4,14 @@ const app = express();
 
 var config = require("./_config");
 
-app.listen(3000, function() {
+app.listen(3000, () => {
 	console.log("Example app listening on port 3000!");
 }); // ip -  "192.168.87.101"
 
 // MongoDB framework
 const mongoose = require("mongoose");
 
-mongoose.connect(config.mongoURI[app.settings.env], function(err, res) {
+mongoose.connect(config.mongoURI[app.settings.env], function (err, res) {
 	useMongoClient: true;
 	if (err) {
 		console.log("Error connecting to the database. " + err);
@@ -28,7 +28,7 @@ mongoose.connect(config.mongoURI[app.settings.env], function(err, res) {
 const swaggerTools = require("swagger-tools");
 const yaml = require("yamljs");
 const swaggerDoc = yaml.load("YBAPI.yaml");
-swaggerTools.initializeMiddleware(swaggerDoc, function(middleware) {
+swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
 	app.use(middleware.swaggerUi());
 });
 
@@ -48,9 +48,7 @@ app.use("/api/", api);
 
 //yb.dk/api/users - limited access
 app.use("/api/users", userRoute);
-
 app.use("/api/questions", questionRoute);
-
 app.use("/api/answers", answerRoute);
 
 // Kun til unit testing
