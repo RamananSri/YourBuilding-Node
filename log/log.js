@@ -1,6 +1,6 @@
 var fs = require("fs");
 
-var errorMessage = error.message;
+var errorMessage = "test";
 var logFile = "log.text";
 
 var logErrors = fs.writeFile(logFile, errorMessage, () => {
