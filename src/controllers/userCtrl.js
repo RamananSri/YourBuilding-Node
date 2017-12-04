@@ -126,8 +126,33 @@ var updateUser = (req, res) => {
 	});
 };
 
-var comparePasswords = (clientPass, dbPass, cb) => {
-	bcrypt.compare(clientPass, dbPass, cb);
+var postSubscription = (req, res) => {
+	userDB.findOne({ _id: req.params.id }, (error, user) => {
+		if (error) {
+			return res.json({
+				success: false,
+				message: error.message
+			});
+		}
+
+		for (var i = 0; i < req.body.categories.length; i++) {
+			user.categories.push(req.body.categories[i]);
+		}
+
+		user.save(error => {
+			if (error) {
+				return res.json({
+					success: false,
+					message: error.message
+				});
+			}
+
+			return res.json({
+				success: true,
+				message: "Kategorier opdateret"
+			});
+		});
+	});
 };
 
 /* Making the functions public, so they can be used from other classes. */
@@ -136,5 +161,6 @@ module.exports = {
 	postUser,
 	getAllUsers,
 	deleteUser,
-	updateUser
+	updateUser,
+	postSubscription
 };
