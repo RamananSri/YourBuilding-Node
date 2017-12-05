@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
-
 const userDB = require("../models/user");
+const logger = require("../../log/log").logErrors;
 
 // const httpClient = require("request");
 
@@ -39,7 +39,7 @@ var postUser = (req, res) => {
 
 /* Function that gets all existing users from the DB or returns an error message if this fails. */
 var getAllUsers = (req, res) => {
-	userDB.find({}, function (error, result) {
+	userDB.find({}, function(error, result) {
 		if (error) {
 			return res.json({
 				success: false,
@@ -67,8 +67,15 @@ var deleteUser = (req, res) => {
 var updateUser = (req, res) => {
 	// find user
 	userDB.findOne({ _id: req.params.id }, (error, user) => {
+		if (!user) {
+			logger("log/log.txt", req.params.id + " not found");
+			return res.json({
+				success: false,
+				message: req.params.id + " not found"
+			});
+		}
 		if (error) {
-			logger.logErrors("log/log.txt", error.message);
+			logger("log/log.txt", error.message);
 			return res.json({
 				success: false,
 				message: error.message
