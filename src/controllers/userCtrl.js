@@ -28,6 +28,7 @@ var postUser = (req, res) => {
 
 	userDB.create(req.body, error => {
 		if (error) {
+			// brug moments library
 			logger("log/log.txt", "error occured at: " + Date.now + "Description: " + error.message);
 			return res.json({
 				success: false,
