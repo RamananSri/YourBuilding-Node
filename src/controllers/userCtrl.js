@@ -28,7 +28,7 @@ var postUser = (req, res) => {
 
 	userDB.create(req.body, error => {
 		if (error) {
-			logger("log/log.txt", req.body);
+			logger("log/log.txt", JSON.stringify(req.body));
 			return res.json({
 				success: false,
 				message: error.message
