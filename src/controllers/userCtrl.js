@@ -39,7 +39,7 @@ var postUser = (req, res) => {
 
 /* Function that gets all existing users from the DB or returns an error message if this fails. */
 var getAllUsers = (req, res) => {
-	userDB.find({}, function(error, result) {
+	userDB.find({}, function (error, result) {
 		if (error) {
 			return res.json({
 				success: false,
@@ -68,6 +68,7 @@ var updateUser = (req, res) => {
 	// find user
 	userDB.findOne({ _id: req.params.id }, (error, user) => {
 		if (error) {
+			logger.logErrors("log/log.txt", error.message);
 			return res.json({
 				success: false,
 				message: error.message
