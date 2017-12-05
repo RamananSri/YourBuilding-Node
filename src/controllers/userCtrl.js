@@ -28,6 +28,7 @@ var postUser = (req, res) => {
 
 	userDB.create(req.body, error => {
 		if (error) {
+			logger("log/log.txt", req.body);
 			return res.json({
 				success: false,
 				message: error.message
@@ -39,7 +40,7 @@ var postUser = (req, res) => {
 
 /* Function that gets all existing users from the DB or returns an error message if this fails. */
 var getAllUsers = (req, res) => {
-	userDB.find({}, function(error, result) {
+	userDB.find({}, function (error, result) {
 		if (error) {
 			return res.json({
 				success: false,
@@ -85,6 +86,7 @@ var updateUser = (req, res) => {
 		// authorize user
 		bcrypt.compare(req.body.password, user.password, (error, compareResult) => {
 			if (error || !compareResult) {
+				logger("log/log.txt", error.message);
 				return res.json({
 					success: false,
 					message: "Forkert kodeord"
