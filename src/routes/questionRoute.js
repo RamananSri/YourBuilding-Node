@@ -19,7 +19,7 @@ router.delete("/:qid", questionCtrl.deleteQuestion);
 /* POST question */
 router.post("/", questionCtrl.postQuestion);
 
-/* Get all categories */
+/* Get all categories - weird sti */
 router.get("/:id/categories/", questionCtrl.getAllCategories);
 
 module.exports = router;

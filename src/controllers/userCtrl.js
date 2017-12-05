@@ -126,7 +126,7 @@ var updateUser = (req, res) => {
 	});
 };
 
-var postSubscription = (req, res) => {
+var putSubscription = (req, res) => {
 	// Find user
 	userDB.findOne({ _id: req.params.id }, (error, user) => {
 		if (error) {
@@ -135,43 +135,11 @@ var postSubscription = (req, res) => {
 				message: error.message
 			});
 		}
-		// If sub does not exist -> add
-		for (var u = 0; u < req.body.categories.length; u++) {
-			if (!user.categories.includes(req.body.categories[u])) {
-				user.categories.push(req.body.categories[u]);
-			}
+		if (req.body.categories) {
+			user.categories = req.body.categories;
 		}
-		// Save changes
-		user.save(error => {
-			if (error) {
-				return res.json({
-					success: false,
-					message: error.message
-				});
-			}
-			return res.json({
-				success: true,
-				message: "Kategorier opdateret"
-			});
-		});
-	});
-};
 
-var removeSubscription = (req, res) => {
-	// Find user
-	userDB.findOne({ _id: req.params.id }, (error, user) => {
-		if (error) {
-			return res.json({
-				success: false,
-				message: error.message
-			});
-		}
-		// Check for matches and splice if matched
-		for (var u = 0; u < req.body.categories.length; u++) {
-			var i = user.categories.indexOf(req.body.categories[u]);
-			user.categories.splice(i, 1);
-		}
-		// Save changes to user
+		// Save changes
 		user.save(error => {
 			if (error) {
 				return res.json({
@@ -194,6 +162,5 @@ module.exports = {
 	getAllUsers,
 	deleteUser,
 	updateUser,
-	postSubscription,
-	removeSubscription
+	putSubscription
 };
