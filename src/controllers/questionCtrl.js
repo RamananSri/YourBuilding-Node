@@ -22,8 +22,9 @@ var getAllCategories = (req, res) => {
 	});
 };
 
+
 var getBySubCategory = (req, res) => {
-	questionDB.find({ subCategory: req.params.subCategory }, function(error, result) {
+	questionDB.find({ subCategory: req.params.subCategory }, function (error, result) {
 		if (error) {
 			return res.json({
 				success: false,
