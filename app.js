@@ -6,13 +6,10 @@ const app = express();
 
 var config = require("./_config");
 
-<<<<<<< HEAD
-app.listen('192.168.87.101');
-=======
 app.listen(3000, () => {
 	console.log("Example app listening on port 3000!");
 }); // ip -  "192.168.87.101"
->>>>>>> 0b2e39f465e2fc6bec8cb3051f8426b5716286b5
+
 
 // MongoDB framework
 const mongoose = require("mongoose");
