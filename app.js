@@ -1,13 +1,12 @@
 // Webserver framework
 const express = require("express");
+const server = require('http').createServer(app);
+var io = require('socket.io').listen(server)
 const app = express();
 
 var config = require("./_config");
 
-app.listen(3000, () => {
-	console.log("Example app listening on port 3000!");
-	var server = http.createServer(app);
-}); // ip -  "192.168.87.101"
+app.listen('192.168.87.101');
 
 // MongoDB framework
 const mongoose = require("mongoose");
