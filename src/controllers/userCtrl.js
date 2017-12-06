@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
-
 const userDB = require("../models/user");
+const logger = require("../../log/log").logErrors;
 
 // const httpClient = require("request");
 
@@ -28,12 +28,14 @@ var postUser = (req, res) => {
 
 	userDB.create(req.body, error => {
 		if (error) {
+			// brug moments library
+			logger("log/log.txt", "error occured at: " + Date.now + "Description: " + error.message);
 			return res.json({
 				success: false,
 				message: error.message
 			});
 		}
-		res.json({ success: true, message: "User created" });
+		res.json({ success: true, message: "Bruger oprettet" });
 	});
 };
 
@@ -59,7 +61,7 @@ var deleteUser = (req, res) => {
 				message: error.message
 			});
 		}
-		res.json({ success: true, message: "User deleted" });
+		res.json({ success: true, message: "Bruger slettet" });
 	});
 };
 
@@ -67,7 +69,15 @@ var deleteUser = (req, res) => {
 var updateUser = (req, res) => {
 	// find user
 	userDB.findOne({ _id: req.params.id }, (error, user) => {
+		if (!user) {
+			logger("log/log.txt", req.params.id + " not found");
+			return res.json({
+				success: false,
+				message: req.params.id + " not found"
+			});
+		}
 		if (error) {
+			logger("log/log.txt", error.message);
 			return res.json({
 				success: false,
 				message: error.message
@@ -77,9 +87,10 @@ var updateUser = (req, res) => {
 		// authorize user
 		bcrypt.compare(req.body.password, user.password, (error, compareResult) => {
 			if (error || !compareResult) {
+				logger("log/log.txt", error.message);
 				return res.json({
 					success: false,
-					message: "password mismatch"
+					message: "Forkert kodeord"
 				});
 			}
 
@@ -117,7 +128,7 @@ var updateUser = (req, res) => {
 						}
 						return res.json({
 							success: true,
-							message: "User updated"
+							message: "Bruger opdateret"
 						});
 					});
 				});
@@ -126,86 +137,33 @@ var updateUser = (req, res) => {
 	});
 };
 
-var comparePasswords = (clientPass, dbPass, cb) => {
-	bcrypt.compare(clientPass, dbPass, cb);
-};
+var putSubscription = (req, res) => {
+	// Find user
+	userDB.findOne({ _id: req.params.id }, (error, user) => {
+		if (error) {
+			return res.json({
+				success: false,
+				message: error.message
+			});
+		}
+		if (req.body.categories) {
+			user.categories = req.body.categories;
+		}
 
-var updateUser2 = (req, res) => {
-	// old password defined
-	if (req.body.password) {
-		userDB.findOne({ _id: req.params.id }, (error, result) => {
+		// Save changes
+		user.save(error => {
 			if (error) {
 				return res.json({
 					success: false,
 					message: error.message
 				});
 			}
-			if (result) {
-				// compare client password with databse password
-				bcrypt.compare(req.body.password, result.password, (err, result) => {
-					if (err) {
-						return res.json({
-							success: false,
-							message: err.message
-						});
-					}
-					// compare match - set + hash new password
-					if (result) {
-						if (req.body.newPassword) {
-							bcrypt.genSalt(10, (error, salt) => {
-								bcrypt.hash(req.body.newPassword, salt, (error, hash) => {
-									req.body.password = hash;
-
-									userDB.findByIdAndUpdate({ _id: req.params.id }, req.body, error => {
-										if (error) {
-											return res.json({
-												success: false,
-												message: error.message
-											});
-										}
-										return res.json({
-											success: true,
-											message: "User updated"
-										});
-									});
-								});
-							});
-						} else {
-							userDB.findByIdAndUpdate({ _id: req.params.id }, req.body, error => {
-								if (error) {
-									return res.json({
-										success: false,
-										message: error.message
-									});
-								}
-								return res.json({
-									success: true,
-									message: "User updated"
-								});
-							});
-						}
-					}
-					// compare does not match
-					return res.json({
-						success: false,
-						message: "Password mismatch"
-					});
-				});
-			} else {
-				res.json({
-					success: false,
-					message: "Password mismatch"
-				});
-			}
+			return res.json({
+				success: true,
+				message: "Kategorier opdateret"
+			});
 		});
-	} else {
-		// old password not defined
-		return res.json({
-			success: false,
-			message: "Forkert kodeord",
-			statusCode: "1"
-		});
-	}
+	});
 };
 
 /* Making the functions public, so they can be used from other classes. */
@@ -214,5 +172,6 @@ module.exports = {
 	postUser,
 	getAllUsers,
 	deleteUser,
-	updateUser
+	updateUser,
+	putSubscription
 };

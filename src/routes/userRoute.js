@@ -16,4 +16,7 @@ router.get("/:id/", userCtrl.getUserById);
 /* DELETE user */
 router.delete("/:id", userCtrl.deleteUser);
 
+/* PUT subscriptions */
+router.put("/:id/subs", userCtrl.putSubscription);
+
 module.exports = router;

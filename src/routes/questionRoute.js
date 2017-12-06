@@ -1,8 +1,6 @@
+const router = require("express").Router();
+const questionCtrl = require("../controllers/questionCtrl");
 const bodyParser = require("body-parser");
-
-const router = require('express').Router();
-
-const questionCtrl = require('../controllers/questionCtrl');
 
 router.use(bodyParser.json());
 
@@ -20,5 +18,8 @@ router.delete("/:qid", questionCtrl.deleteQuestion);
 
 /* POST question */
 router.post("/", questionCtrl.postQuestion);
+
+/* Get all categories - weird sti */
+router.get("/:id/categories/", questionCtrl.getAllCategories);
 
 module.exports = router;

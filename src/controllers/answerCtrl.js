@@ -1,4 +1,4 @@
-const questionDB = require("../models/question");
+const questionDB = require("../models/question").question;
 
 var postAnswer = (req, res) => {
 	// Find the question
@@ -21,7 +21,7 @@ var postAnswer = (req, res) => {
 			}
 			return res.json({
 				success: true,
-				message: "Spørgsmål oprettet"
+				message: "Svar oprettet"
 			});
 		});
 	});
@@ -35,9 +35,8 @@ var updateAnswer = (req, res) => {
 				message: error.message
 			});
 		}
-
 		for (var i = 0; i < result.answers.length; i++) {
-			if (result.answers[i]._id == req.body._id) {
+			if (result.answers[i].id == req.body._id) {
 				result.answers[i] = req.body;
 			}
 		}
@@ -52,7 +51,7 @@ var updateAnswer = (req, res) => {
 			}
 			return res.json({
 				success: true,
-				message: "Spørgsmål opdateret"
+				message: "Svar opdateret"
 			});
 		});
 	});
@@ -60,6 +59,7 @@ var updateAnswer = (req, res) => {
 
 var deleteAnswer = (req, res) => {
 	questionDB.findOne({ _id: req.params.qid }, (error, result) => {
+		console.log(result.answers[0].id);
 		if (error) {
 			return res.json({
 				success: false,
@@ -80,7 +80,7 @@ var deleteAnswer = (req, res) => {
 			}
 			return res.json({
 				success: true,
-				message: "Spørgsmål slettet"
+				message: "Svar slettet"
 			});
 		});
 	});
