@@ -1,6 +1,5 @@
 // Webserver framework
 const express = require("express");
-var io = require('socket.io').listen(server)
 const app = express();
 
 var config = require("./_config");
