@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const userDB = require("../models/user");
 const logger = require("../../log/log").logErrors;
+const moment = require("moment");
 
 // const httpClient = require("request");
 
@@ -29,7 +30,7 @@ var postUser = (req, res) => {
 	userDB.create(req.body, error => {
 		if (error) {
 			// brug moments library
-			logger("log/log.txt", "error occured at: " + Date.now() + "Description: " + error.message);
+			logger("log/log.txt", moment().format('LTS') + "Error: " + error.message);
 			return res.json({
 				success: false,
 				message: error.message
