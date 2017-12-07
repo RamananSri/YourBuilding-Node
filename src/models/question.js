@@ -42,7 +42,7 @@ var questionModel = new Schema({
 	},
 	likeCounter: {
 		type: Number,
-		required: true
+		required: false
 	}
 });
 

@@ -22,9 +22,8 @@ var getAllCategories = (req, res) => {
 	});
 };
 
-
 var getBySubCategory = (req, res) => {
-	questionDB.find({ subCategory: req.params.subCategory }, function (error, result) {
+	questionDB.find({ subCategory: req.params.subCategory }, function(error, result) {
 		if (error) {
 			return res.json({
 				success: false,
@@ -36,7 +35,7 @@ var getBySubCategory = (req, res) => {
 };
 
 var getQuestionByUserId = (req, res) => {
-	questionDB.findOne({ userId: req.params.id }, (error, result) => {
+	questionDB.find({ userId: req.params.id }, (error, result) => {
 		if (error) {
 			return res.json({
 				success: false,

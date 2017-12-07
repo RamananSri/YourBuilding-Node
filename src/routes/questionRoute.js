@@ -11,7 +11,7 @@ router.get("/:subCategory", questionCtrl.getBySubCategory);
 router.put("/:id/", questionCtrl.updateQuestion);
 
 /* GET question by ID */
-router.get("/:id/", questionCtrl.getQuestionByUserId);
+router.get("/user/:id/", questionCtrl.getQuestionByUserId);
 
 /* DELETE question */
 router.delete("/:qid", questionCtrl.deleteQuestion);
