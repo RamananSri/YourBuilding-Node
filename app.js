@@ -40,5 +40,11 @@ app.use("/api/users", userRoute);
 app.use("/api/questions", questionRoute);
 app.use("/api/answers", answerRoute);
 
+app.use(express.static("src/julefrokost/public"));
+
+app.get("/julefrokost", (req, res) => {
+	res.sendFile("./src/julefrokost/countdown.html", { root: __dirname });
+});
+
 // Kun til unit testing
 module.exports = app;
