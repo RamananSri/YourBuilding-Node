@@ -47,7 +47,7 @@ var getQuestionByUserId = (req, res) => {
 };
 
 var deleteQuestion = (req, res) => {
-	questionDB.findOneAndRemove({ _id: req.params.id }, error => {
+	questionDB.findByIdAndRemove({ _id: req.params.qid }, error => {
 		if (error) {
 			return res.json({
 				success: false,
