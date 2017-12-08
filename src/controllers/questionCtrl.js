@@ -22,16 +22,28 @@ var getAllCategories = (req, res) => {
 	});
 };
 
-var getBySubCategory = (req, res) => {
-	questionDB.find({ subCategory: req.params.subCategory }, function(error, result) {
-		if (error) {
-			return res.json({
-				success: false,
-				message: error.message
-			});
-		}
-		res.json(result);
-	});
+var getByCategory = (req, res) => {
+	if (subCategories.includes(req.params.category)) {
+		questionDB.find({ subCategory: req.params.category }, function(error, result) {
+			if (error) {
+				return res.json({
+					success: false,
+					message: error.message
+				});
+			}
+			res.json(result);
+		});
+	} else {
+		questionDB.find({ category: req.params.category }, function(error, result) {
+			if (error) {
+				return res.json({
+					success: false,
+					message: error.message
+				});
+			}
+			res.json(result);
+		});
+	}
 };
 
 var getQuestionByUserId = (req, res) => {
@@ -86,7 +98,7 @@ var updateQuestion = (req, res) => {
 };
 
 module.exports = {
-	getBySubCategory,
+	getByCategory,
 	getQuestionByUserId,
 	postQuestion,
 	deleteQuestion,

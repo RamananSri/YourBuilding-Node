@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 router.use(bodyParser.json());
 
 /* GET all questions */
-router.get("/:subCategory", questionCtrl.getBySubCategory);
+router.get("/:category", questionCtrl.getByCategory);
 
 /* UPDATE question */
 router.put("/:id/", questionCtrl.updateQuestion);
