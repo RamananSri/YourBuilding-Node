@@ -1,11 +1,7 @@
 var fs = require("fs");
+var moment = require("moment");
 
-var errorMessage = "test";
-var logFile = "log.txt";
-
-var logErrors = fs.writeFile(logFile, (err, data) => {
-	console.log(data);
-});
+var logErrors = (path, message) => { fs.appendFile(path, moment().add(1, "hours").locale("dk").format('LLL') + " Error: " + message + "\r\n") };
 
 module.exports = {
 	logErrors

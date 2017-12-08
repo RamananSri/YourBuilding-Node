@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
-
 const userDB = require("../models/user");
+const logger = require("../../log/log").logErrors;
 
 // const httpClient = require("request");
 
@@ -28,6 +28,7 @@ var postUser = (req, res) => {
 
 	userDB.create(req.body, error => {
 		if (error) {
+			logger("log/log.txt", error.message);
 			return res.json({
 				success: false,
 				message: error.message
@@ -67,7 +68,15 @@ var deleteUser = (req, res) => {
 var updateUser = (req, res) => {
 	// find user
 	userDB.findOne({ _id: req.params.id }, (error, user) => {
+		if (!user) {
+			logger("log/log.txt", req.params.id + " not found");
+			return res.json({
+				success: false,
+				message: req.params.id + " not found"
+			});
+		}
 		if (error) {
+			logger("log/log.txt", error.message);
 			return res.json({
 				success: false,
 				message: error.message
@@ -76,10 +85,19 @@ var updateUser = (req, res) => {
 
 		// authorize user
 		bcrypt.compare(req.body.password, user.password, (error, compareResult) => {
-			if (error || !compareResult) {
+			if (!compareResult) {
+				var mes = "Kodeord forkert";
+				logger("log/log.txt", mes);
 				return res.json({
 					success: false,
-					message: "Forkert kodeord"
+					message: mes
+				});
+			}
+			if (error) {
+				logger("log/log.txt", error.message);
+				return res.json({
+					success: false,
+					message: error.message
 				});
 			}
 
@@ -126,7 +144,8 @@ var updateUser = (req, res) => {
 	});
 };
 
-var postSubscription = (req, res) => {
+var putSubscription = (req, res) => {
+	// Find user
 	userDB.findOne({ _id: req.params.id }, (error, user) => {
 		if (error) {
 			return res.json({
@@ -134,14 +153,22 @@ var postSubscription = (req, res) => {
 				message: error.message
 			});
 		}
-
-		for (i = 0; i < req.body.categories.length; i++) {
-			user.categories.push(req.body[req.body.categori]);
+		if (req.body.categories) {
+			user.categories = req.body.categories;
 		}
 
-		res.json({
-			success: true,
-			message: "Kategorier opdateret"
+		// Save changes
+		user.save(error => {
+			if (error) {
+				return res.json({
+					success: false,
+					message: error.message
+				});
+			}
+			return res.json({
+				success: true,
+				message: "Kategorier opdateret"
+			});
 		});
 	});
 };
@@ -153,5 +180,5 @@ module.exports = {
 	getAllUsers,
 	deleteUser,
 	updateUser,
-	postSubscription
+	putSubscription
 };

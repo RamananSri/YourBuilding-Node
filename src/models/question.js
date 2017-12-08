@@ -39,6 +39,10 @@ var questionModel = new Schema({
 	questionDate: {
 		type: Date,
 		required: true
+	},
+	likeCounter: {
+		type: Number,
+		required: false
 	}
 });
 
