@@ -131,37 +131,13 @@
             <audio>
     </div>
 
-
-
-
-
-
-
-
     <script src="./fallingsnow_v6.js"></script>
 
     <script>
         console.log("hej");
 
-        var min = 25;
-        var max = 100;
-
-        // var randomizer = () => {
-        //     var time = Math.floor(Math.random() * (max - min + 1) + min);
-        //     return time;
-        // }
-
-        // var gongtime = randomizer();
-
-        // setInterval(() => {
-
-        //     gongtime = randomizer();
-        //     console.log(gongtime);
-
-        //     var gongPlayer = document.getElementById("gongAudio");
-        //     gongPlayer.play();
-        // }, gongtime)
-
+        var min = 5;   // min 25 sekunder
+        var max = 10; // maks 100 sekunder
 
         function doSomething() {
             var gongPlayer = document.getElementById("gongAudio");
@@ -173,7 +149,7 @@
             setTimeout(function () {
                 doSomething();
                 loop();
-            }, rand);
+            }, rand * 1000);
         }());
 
 
